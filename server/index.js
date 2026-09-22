@@ -238,8 +238,9 @@ const server = http.createServer(async (req, res) => {
         ? [...new Set(data.interests.filter((value) => themeIds.includes(value)))].slice(0, 14)
         : null;
       if (interests && interests.length < 5) fail("Выберите минимум 5 интересов.");
+      const allowedCities = ["Москва", "Санкт-Петербург", "Казань", "Рыбинск"];
       u.profile = {
-        city: "Москва",
+        city: allowedCities.includes(data.city) ? data.city : (allowedCities.includes(u.profile.city) ? u.profile.city : "Москва"),
         category: ["all", "animals", "people"].includes(data.category)
           ? data.category
           : u.profile.category,
@@ -414,7 +415,7 @@ server.listen(
   process.env.HOST || "127.0.0.1",
   () =>
     console.log(
-      `Первый шаг MAX: http://${process.env.HOST || "127.0.0.1"}:${process.env.PORT || 3210} (${demo ? "demo" : "max"})`,
+      `хелпи MAX: http://${process.env.HOST || "127.0.0.1"}:${process.env.PORT || 3210} (${demo ? "demo" : "max"})`,
     ),
 );
 if (token) {

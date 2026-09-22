@@ -14,13 +14,12 @@ import {
   Map as MapIcon,
   Clock,
   ChevronRight,
+  ChevronDown,
   Copy,
   ExternalLink,
   Plus,
   Sprout,
-  Flower2,
   HandHeart,
-  MessageCircle,
   BookOpen,
   X,
   Settings,
@@ -28,13 +27,9 @@ import {
   RefreshCw,
   Search,
   SlidersHorizontal,
-  Gauge,
   Moon,
   Sun,
   UserRound,
-  Award,
-  Target,
-  ListChecks,
 } from "lucide-react";
 import "./style.css";
 import Garden from './Garden.jsx';
@@ -72,6 +67,12 @@ class MapErrorBoundary extends React.Component {
     if (!this.state.failed) return this.props.children;
     return <div className="map-fallback"><MapPin size={28}/><h2>Карта временно не открылась</h2><p>Лента добрых дел продолжает работать. Обнови карту — страница восстановится без белого экрана.</p><button className="primary" onClick={() => { sessionStorage.removeItem(mapRetryKey); window.location.reload(); }}><RefreshCw size={16}/>Обновить карту</button></div>;
   }
+}
+
+function HelpiWordmark({ className = "" }) {
+  return (
+    <span className={`helpi-wordmark ${className}`.trim()}>хелпи</span>
+  );
 }
 // MAX Bridge is injected by the MAX client. The app still renders in a normal
 // browser for demo mode, where this value is undefined.
@@ -122,14 +123,6 @@ const interestOptions = [
   "animals", "ecology", "elderly", "children", "city", "creativity", "activity",
   "education", "events", "online_help", "donation", "recycling", "nature", "charity",
 ].map((id) => [id, ...themeMeta[id]]);
-const quickFeedFilters = [
-  ["first_time", "Первый раз"],
-  ["easy", "Попроще"],
-  ["remote", "Из дома"],
-  ["calm", "Спокойно"],
-  ["friends", "С друзьями"],
-  ["one_off", "Разово"],
-];
 const audienceFilters = [
   ["animals", "Животные"],
   ["children", "Дети"],
@@ -139,6 +132,22 @@ const audienceFilters = [
   ["environment", "Природа"],
   ["nonprofit_organizations", "НКО"],
 ];
+const cityOptions = [
+  { name: "Москва", center: [37.6173, 55.7558], aliases: ["москва"] },
+  { name: "Санкт-Петербург", center: [30.3159, 59.9391], aliases: ["санкт-петербург", "петербург", "спб"] },
+  { name: "Казань", center: [49.1064, 55.7961], aliases: ["казан"] },
+  { name: "Рыбинск", center: [38.8584, 58.0484], aliases: ["рыбинск"] },
+];
+const cityNames = new Set(cityOptions.map((city) => city.name));
+const normalizedPlace = (value) => String(value || "").toLocaleLowerCase("ru-RU").replace(/ё/g, "е");
+const eventIsOnline = (event) => ["online", "remote"].includes(event.annotation?.format || event.traits?.format)
+  || /онлайн|дистанцион/.test(normalizedPlace(`${event.city} ${event.address} ${event.support}`));
+const eventMatchesCity = (event, cityName, includeOnline = true) => {
+  if (includeOnline && eventIsOnline(event)) return true;
+  const option = cityOptions.find((city) => city.name === cityName) || cityOptions[0];
+  const place = normalizedPlace(`${event.city} ${event.address}`);
+  return option.aliases.some((alias) => place.includes(alias));
+};
 const complexityText = (score) => score === null || score === undefined
   ? "Сложность уточняется"
   : score <= 19 ? "Очень просто"
@@ -149,60 +158,21 @@ const complexityText = (score) => score === null || score === undefined
 const complexityCardStyle = (score) => {
   if (!Number.isFinite(score)) return undefined;
   const value = Math.max(0, Math.min(100, score));
-  const hue = value <= 50
-    ? 128 - value * 1.6
-    : 48 - (value - 50) * 0.86;
-  return { "--difficulty-hue": hue.toFixed(1) };
-};
-const positiveLabels = {
-  clear_duties: "Понятные обязанности", simple_tasks: "Простые задачи",
-  no_experience_required: "Опыт не нужен", briefing_provided: "Есть инструктаж",
-  coordinator_support: "Рядом координатор", flexible_schedule: "Гибкое время",
-  short_shift: "Короткая смена", choice_of_tasks: "Можно выбрать задачу",
-  group_format: "Работа в группе", remote_format: "Можно из дома",
-};
-const concernLabels = {
-  unclear_duties: "Уточнить обязанности", unclear_conditions: "Уточнить условия",
-  specialized_skill: "Нужны навыки", qualification_required: "Нужна квалификация",
-  high_physical_load: "Физическая нагрузка", high_emotional_load: "Эмоциональная нагрузка",
-  high_social_load: "Много общения", high_responsibility: "Высокая ответственность",
-  long_or_regular_commitment: "Долгое участие", application_or_selection: "Есть отбор",
-  own_resource_required: "Нужны свои материалы", age_or_consent_condition: "Есть возрастные условия",
-  safety_needs_review: "Проверить безопасность",
-};
-const unknownLabels = {
-  exact_duties: "точные обязанности", exact_location: "место", exact_time: "время",
-  duration: "длительность", physical_requirements: "физическую нагрузку", training: "обучение",
-  supervision: "сопровождение", equipment: "что взять", accessibility: "доступность",
-  group_participation: "можно ли вместе", remote_process: "порядок удалённой работы",
+  const color = value <= 20
+    ? "oklch(82% .17 125)"
+    : value <= 40
+      ? "hsl(76 82% 48%)"
+      : value <= 60
+        ? "hsl(50 94% 52%)"
+        : value <= 80
+          ? "hsl(18 88% 60%)"
+          : "hsl(0 88% 57%)";
+  return { "--difficulty-color": color };
 };
 const commitmentLabels = {
   one_off: "Один визит", multiple_visits: "Несколько встреч", regular: "Регулярно",
   flexible: "Гибко", unknown: "По договорённости",
 };
-const annotationValueLabels = {
-  minimal: "Минимальная", light: "Лёгкая", moderate: "Средняя", heavy: "Высокая",
-  low: "Низкая", high: "Высокая", none: "Не нужны", briefing: "Достаточно инструктажа",
-  specialized: "Нужны специальные навыки", licensed: "Нужна квалификация", solitary: "Почти без общения",
-  supervised_simple: "Простая, под присмотром", independent_routine: "Самостоятельная обычная",
-  safety_critical: "Связана с безопасностью", walk_in: "Можно просто записаться", registration: "Нужна регистрация",
-  application: "Нужна анкета", training: "Нужно обучение", selection: "Есть отбор", up_to_2h: "До двух часов",
-  half_day: "Полдня", full_day: "Полный день", multi_day: "Несколько дней", regular: "Регулярно",
-  unknown: "Не указано", solo: "Одному", pair: "Вдвоём", small_group: "Небольшой группой",
-  large_group: "Большой командой", own_pet: "Свой питомец", smartphone: "Смартфон", camera: "Камера",
-  computer: "Компьютер", car: "Автомобиль", tools: "Инструменты", protective_equipment: "Защитное снаряжение",
-  materials: "Материалы", money_for_materials: "Деньги на материалы", language_skill: "Знание языка",
-  driving_license: "Водительские права", professional_qualification: "Профессиональная квалификация",
-  health_eligibility: "Медицинские требования", interview: "Собеседование", parental_consent: "Согласие родителей",
-  source_registration: "Регистрация на площадке источника",
-};
-const complexityAxes = [
-  ["physicalLoad", "Физическая нагрузка"], ["emotionalLoad", "Эмоциональная нагрузка"],
-  ["skillRequirement", "Навыки"], ["socialLoad", "Общение"],
-  ["responsibility", "Ответственность"], ["entryBarrier", "Порог входа"],
-  ["timeCommitment", "Время"],
-];
-const formatLabels = { online: "Онлайн", on_site: "На месте", field_trip: "Выезд", hybrid: "Смешанный", unknown: "Не указано" };
 const dateLabel = (d) =>
   d
     ? new Date(d).toLocaleString("ru-RU", {
@@ -292,7 +262,7 @@ function App() {
     [tab, setTab] = useState(() => {
       const requested = new URLSearchParams(location.search).get("tab") || "home";
       if (requested === "discover" || requested === "together") return "home";
-      if (requested === "plan") return "profile";
+      if (requested === "plan" || requested === "garden") return "profile";
       return requested;
     }),
     [detail, setDetail] = useState(null),
@@ -307,16 +277,24 @@ function App() {
     [share, setShare] = useState(""),
     [calibrationDone, setCalibrationDone] = useState(false),
     [feedLimit, setFeedLimit] = useState(12),
-    [feedFilters, setFeedFilters] = useState([]),
     [audienceFilter, setAudienceFilter] = useState(""),
+    [difficultyFilter, setDifficultyFilter] = useState(""),
+    [dateFilter, setDateFilter] = useState(""),
+    [timeFilter, setTimeFilter] = useState(""),
+    [formatFilter, setFormatFilter] = useState(""),
     [feedQuery, setFeedQuery] = useState(""),
     [feedFiltersOpen, setFeedFiltersOpen] = useState(false),
     [registrationName, setRegistrationName] = useState(""),
     [registrationAge, setRegistrationAge] = useState(""),
+    [selectedCity, setSelectedCity] = useState(() => {
+      const saved = localStorage.getItem("helpi-city");
+      return cityNames.has(saved) ? saved : "Москва";
+    }),
     [theme, setTheme] = useState(() => localStorage.getItem("first-step-theme") || (window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
   const [swipeDrag, setSwipeDrag] = useState(0),
     [swipeStart, setSwipeStart] = useState(null);
   const feedSentinel = useRef(null);
+  const cityPickerRef = useRef(null);
   const inviteCode =
     new URLSearchParams(location.search).get("invite") ||
     maxApp?.initDataUnsafe?.start_param?.replace(/^i_/, "");
@@ -349,6 +327,16 @@ function App() {
     localStorage.setItem("first-step-theme", theme);
   }, [theme]);
   useEffect(() => {
+    localStorage.setItem("helpi-city", selectedCity);
+  }, [selectedCity]);
+  useEffect(() => {
+    const closeCityPicker = (event) => {
+      if (!cityPickerRef.current?.contains(event.target)) cityPickerRef.current?.removeAttribute("open");
+    };
+    document.addEventListener("pointerdown", closeCityPicker);
+    return () => document.removeEventListener("pointerdown", closeCityPicker);
+  }, []);
+  useEffect(() => {
     if (!toast) return;
     const t = setTimeout(() => setToast(""), 4500);
     return () => clearTimeout(t);
@@ -374,7 +362,7 @@ function App() {
   }, [tab, detail, onboard, settings]);
   useEffect(() => {
     if (data?.recommendations?.stage === "feed") window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [data?.recommendations?.stage, feedFilters.join("|"), audienceFilter, feedQuery]);
+  }, [data?.recommendations?.stage, audienceFilter, difficultyFilter, dateFilter, timeFilter, formatFilter, feedQuery]);
   useEffect(() => {
     const sentinel = feedSentinel.current;
     if (!sentinel || data?.recommendations?.stage !== "feed") return;
@@ -407,7 +395,7 @@ function App() {
     }
   }
   function go(t) {
-    const nextTab = t === "discover" || t === "together" ? "home" : t === "plan" ? "profile" : t;
+    const nextTab = t === "discover" || t === "together" ? "home" : ["plan", "garden"].includes(t) ? "profile" : t;
     setTab(nextTab);
     setDetail(null);
     setOnboard(false);
@@ -450,7 +438,7 @@ function App() {
       await api("/plans/" + id, "PATCH", patch);
       await load();
       if(patch.status === 'done') {
-        go('garden');
+        go('profile');
         setToast('Новое растение в твоём саду · +100 воды' + (patch.hours ? ` · +${patch.hours * 50} солнца` : ''));
       } else setToast("План обновлён");
     });
@@ -493,7 +481,7 @@ function App() {
     return (
       <main className="registration-screen">
         <section className="registration-story">
-          <div className="registration-brand"><Sprout size={25} /> первый шаг</div>
+          <div className="registration-brand"><HelpiWordmark /></div>
           <div className="registration-copy">
             <span className="eyebrow">ДАВАЙ ЗНАКОМИТЬСЯ · ШАГ 1 ИЗ 3</span>
             <h1>Сначала — немного о тебе</h1>
@@ -534,8 +522,12 @@ function App() {
     (p) => !["cancelled", "done"].includes(p.status),
   );
   const done = data.plans.filter((p) => p.status === "done");
-  const chosen = data.catalog.filter(live);
+  const liveCatalog = data.catalog.filter(live);
+  const chosen = liveCatalog.filter((event) => eventMatchesCity(event, selectedCity));
+  const mapEvents = liveCatalog.filter((event) => eventMatchesCity(event, selectedCity, false));
   const catalogById = new Map(data.catalog.map((event) => [event.id, event]));
+  const cityCatalogById = new Map(chosen.map((event) => [event.id, event]));
+  const selectedCityOption = cityOptions.find((city) => city.name === selectedCity) || cityOptions[0];
   const recommendations = data.recommendations || { stage: "interests" };
   const calibrationItem = recommendations.stage === "calibration"
     ? recommendations.items?.[recommendations.completed]
@@ -557,28 +549,45 @@ function App() {
   const nav = [
     ["home", Compass, "Добрые дела"],
     ["map", MapIcon, "Карта"],
-    ["garden", Flower2, "Мой сад"],
     ["profile", UserRound, "Профиль"],
   ];
   const mobileNav = nav;
+  function CityPicker() {
+    async function chooseCity(name) {
+      cityPickerRef.current?.removeAttribute("open");
+      if (name === selectedCity) return;
+      setSelectedCity(name);
+      setFeedLimit(12);
+      setDetail(null);
+      await act(async () => {
+        const user = await api("/profile", "PATCH", { city: name });
+        setData((current) => ({ ...current, user }));
+        setProfile(user.profile);
+      });
+    }
+    return <details className="city-picker" ref={cityPickerRef}>
+      <summary aria-label={`Город: ${selectedCity}. Изменить город`}>
+        <MapPin size={15}/><span>{selectedCity}</span><ChevronDown size={14}/>
+      </summary>
+      <div className="city-menu" role="menu" aria-label="Выбор города">
+        {cityOptions.map((city) => <button type="button" role="menuitemradio" aria-checked={city.name === selectedCity} className={city.name === selectedCity ? "active" : ""} key={city.name} onClick={() => chooseCity(city.name)}>
+          <span>{city.name}</span>{city.name === selectedCity && <Check size={15}/>}
+        </button>)}
+      </div>
+    </details>;
+  }
   function ThemeToggle({ floating = false }) {
     const dark = theme === "dark";
     return <button className={floating ? "theme-toggle floating-theme-toggle" : "theme-toggle"} aria-label={dark ? "Включить светлую тему" : "Включить тёмную тему"} title={dark ? "Светлая тема" : "Тёмная тема"} onClick={() => setTheme(dark ? "light" : "dark")}>{dark ? <Sun size={18}/> : <Moon size={18}/>}</button>;
   }
   function BottomNav({ garden = false }) {
     return <nav className={garden ? "garden-nav" : "mobile-nav"} aria-label="Основная навигация">
-      {mobileNav.map(([id, Icon, label]) => <button className={tab === id ? "active" : ""} key={id} onClick={() => go(id)}>
+      {mobileNav.map(([id, Icon, label]) => <button className={`${tab === id ? "active " : ""}nav-${id}`} key={id} onClick={() => go(id)}>
         <Icon size={21} />
         <span>{id === "home" ? "Дела" : label}</span>
         {id === "profile" && active.length > 0 && <i>{active.length}</i>}
       </button>)}
     </nav>;
-  }
-  function matchesFeedFilter(event, filter) {
-    const annotation = event.annotation;
-    if (annotation?.filterTags?.includes(filter)) return true;
-    if (!annotation && filter === "remote") return event.traits?.format === "online";
-    return false;
   }
   function matchesAudience(event, audience) {
     if (!audience) return true;
@@ -588,18 +597,45 @@ function App() {
     return audience === "animals" && event.themes?.includes("animals")
       || audience === "environment" && event.themes?.some((theme) => ["ecology", "nature", "recycling"].includes(theme));
   }
+  function matchesDifficulty(event, difficulty) {
+    if (!difficulty) return true;
+    const score = event.annotation?.complexity?.overall;
+    if (!Number.isFinite(score)) return false;
+    if (difficulty === "easy") return score < 40;
+    if (difficulty === "medium") return score >= 40 && score < 70;
+    return score >= 70;
+  }
+  function matchesDate(event, date) {
+    if (!date) return true;
+    const dayStart = Date.parse(`${date}T00:00:00+03:00`);
+    const dayEnd = dayStart + 86_400_000 - 1;
+    return Date.parse(event.startsAt) <= dayEnd && Date.parse(event.endsAt) >= dayStart;
+  }
+  function matchesTime(event, period) {
+    if (!period) return true;
+    const parsed = new Date(event.startsAt);
+    if (Number.isNaN(parsed.getTime())) return false;
+    const moscowHour = (parsed.getUTCHours() + 3) % 24;
+    if (period === "morning") return moscowHour >= 6 && moscowHour < 12;
+    if (period === "day") return moscowHour >= 12 && moscowHour < 18;
+    return moscowHour >= 18 || moscowHour < 6;
+  }
+  function matchesFormat(event, format) {
+    if (!format) return true;
+    const eventFormat = event.annotation?.format || event.traits?.format;
+    return format === "online"
+      ? eventFormat === "online"
+      : ["on_site", "offline", "field_trip", "hybrid"].includes(eventFormat);
+  }
   function eventMatchesActiveFilters(event) {
     const query = feedQuery.trim().toLocaleLowerCase("ru-RU");
     const searchable = `${event.title} ${event.short} ${event.intro} ${event.annotation?.shortExplanation ?? ""} ${(event.annotation?.structuredTasks ?? []).join(" ")}`.toLocaleLowerCase("ru-RU");
     return (!query || searchable.includes(query))
-      && feedFilters.every((filter) => matchesFeedFilter(event, filter))
-      && matchesAudience(event, audienceFilter);
-  }
-  function toggleFeedFilter(filter) {
-    setFeedFilters((current) => current.includes(filter)
-      ? current.filter((item) => item !== filter)
-      : [...current, filter]);
-    setFeedLimit(12);
+      && matchesAudience(event, audienceFilter)
+      && matchesDifficulty(event, difficultyFilter)
+      && matchesDate(event, dateFilter)
+      && matchesTime(event, timeFilter)
+      && matchesFormat(event, formatFilter);
   }
   function Card({ e, featured = false }) {
     const annotation = e.annotation;
@@ -631,8 +667,7 @@ function App() {
         <div className="event-body">
           <h3>{e.short}</h3>
           <p>{annotation?.shortExplanation || e.intro}</p>
-          {annotation && <div className="event-insights">
-            <span className={`insight-chip ${complexity !== null && complexity <= 39 ? "easy" : ""}`}><Gauge size={12}/>{complexityText(complexity)}{complexity !== null ? ` · ${complexity}` : ""}</span>
+          {annotation && (annotation.firstTime?.verdict === "suitable" || annotation.quality?.status === "clarification_required") && <div className="event-insights">
             {annotation.firstTime?.verdict === "suitable" && <span className="insight-chip beginner"><Sprout size={12}/>Для первого раза · {annotation.firstTime.score}</span>}
             {annotation.quality?.status === "clarification_required" && <span className="insight-chip clarify">Есть что уточнить</span>}
           </div>}
@@ -649,7 +684,7 @@ function App() {
   }
   function CatalogFeed() {
     const sections = recommendations.sections || [{ id: "all", title: "Для тебя", subtitle: "Актуальные дела", eventIds: chosen.slice(0, 6).map((event) => event.id) }];
-    const activeFilterCount = feedFilters.length + Number(Boolean(audienceFilter)) + Number(Boolean(feedQuery.trim()));
+    const activeFilterCount = [audienceFilter, difficultyFilter, dateFilter, timeFilter, formatFilter, feedQuery.trim()].filter(Boolean).length;
     const filteredEvents = chosen.filter(eventMatchesActiveFilters);
     const recommendedIds = new Set(activeFilterCount ? [] : sections.flatMap((section) => section.eventIds));
     const moreEvents = activeFilterCount ? filteredEvents : chosen.filter((event) => !recommendedIds.has(event.id));
@@ -661,18 +696,21 @@ function App() {
           <label className="feed-search"><Search size={17}/><input value={feedQuery} onChange={(event) => { setFeedQuery(event.target.value); setFeedLimit(12); }} placeholder="Найти дело" aria-label="Поиск по добрым делам"/></label>
           <button className={`filter-toggle ${feedFiltersOpen ? "active" : ""}`} onClick={() => setFeedFiltersOpen((value) => !value)} aria-expanded={feedFiltersOpen}><SlidersHorizontal size={17}/>Фильтры{activeFilterCount > 0 && <i>{activeFilterCount}</i>}</button>
         </div>
-        <div className="quick-filter-row">
-          {quickFeedFilters.map(([id, label]) => <button key={id} className={feedFilters.includes(id) ? "active" : ""} aria-pressed={feedFilters.includes(id)} onClick={() => toggleFeedFilter(id)}>{label}</button>)}
-        </div>
         <div className={`advanced-filters ${feedFiltersOpen ? "open" : ""}`}>
-          <div><span>Кому помочь</span><div className="audience-options">{audienceFilters.map(([id, label]) => <button key={id} className={audienceFilter === id ? "active" : ""} aria-pressed={audienceFilter === id} onClick={() => { setAudienceFilter((current) => current === id ? "" : id); setFeedLimit(12); }}>{label}</button>)}</div></div>
-          {activeFilterCount > 0 && <button className="reset-filters" onClick={() => { setFeedFilters([]); setAudienceFilter(""); setFeedQuery(""); setFeedLimit(12); }}>Сбросить всё <X size={14}/></button>}
+          <div className="filter-groups">
+            <div className="filter-group"><span>Сложность</span><div className="filter-options">{[["easy", "Легко"], ["medium", "Средне"], ["hard", "Сложно"]].map(([id, label]) => <button key={id} className={difficultyFilter === id ? "active" : ""} aria-pressed={difficultyFilter === id} onClick={() => { setDifficultyFilter((current) => current === id ? "" : id); setFeedLimit(12); }}>{label}</button>)}</div></div>
+            <label className="filter-group filter-date"><span>Дата</span><input type="date" value={dateFilter} onChange={(event) => { setDateFilter(event.target.value); setFeedLimit(12); }}/></label>
+            <div className="filter-group"><span>Время</span><div className="filter-options">{[["morning", "Утро"], ["day", "День"], ["evening", "Вечер"]].map(([id, label]) => <button key={id} className={timeFilter === id ? "active" : ""} aria-pressed={timeFilter === id} onClick={() => { setTimeFilter((current) => current === id ? "" : id); setFeedLimit(12); }}>{label}</button>)}</div></div>
+            <div className="filter-group"><span>Формат</span><div className="filter-options">{[["on_site", "На месте"], ["online", "Онлайн"]].map(([id, label]) => <button key={id} className={formatFilter === id ? "active" : ""} aria-pressed={formatFilter === id} onClick={() => { setFormatFilter((current) => current === id ? "" : id); setFeedLimit(12); }}>{label}</button>)}</div></div>
+            <div className="filter-group filter-audience"><span>Кому помочь</span><div className="filter-options">{audienceFilters.map(([id, label]) => <button key={id} className={audienceFilter === id ? "active" : ""} aria-pressed={audienceFilter === id} onClick={() => { setAudienceFilter((current) => current === id ? "" : id); setFeedLimit(12); }}>{label}</button>)}</div></div>
+          </div>
+          {activeFilterCount > 0 && <button className="reset-filters" onClick={() => { setDifficultyFilter(""); setDateFilter(""); setTimeFilter(""); setFormatFilter(""); setAudienceFilter(""); setFeedQuery(""); setFeedLimit(12); }}>Сбросить всё <X size={14}/></button>}
         </div>
         {activeFilterCount > 0 && <div className="filter-result"><strong>{filteredEvents.length}</strong><span>{filteredEvents.length === 1 ? "подходящее дело" : "подходящих дел"}</span></div>}
       </section>
       {!activeFilterCount && <div className="feed-sections">
         {sections.map((section) => {
-          const items = section.eventIds.map((id) => catalogById.get(id)).filter(Boolean);
+          const items = section.eventIds.map((id) => cityCatalogById.get(id)).filter(Boolean);
           if (!items.length) return null;
           return <section className="feed-block" key={section.id}>
             <div className="section-head"><h2>{section.title}{section.id === "taste" ? " 🌱" : ""}</h2></div>
@@ -684,82 +722,32 @@ function App() {
         <div className="cards catalog">{visibleEvents.map((event) => <Card key={event.id} e={event}/>)}</div>
         {visibleEvents.length < moreEvents.length && <div className="feed-sentinel" ref={feedSentinel} aria-hidden="true"/>}
       </section>}
-      {activeFilterCount > 0 && !moreEvents.length && <div className="feed-empty"><Sprout size={34}/><h2>Таких дел пока не нашли</h2><p>Убери один из фильтров — покажем ближайшие варианты.</p><button className="secondary" onClick={() => { setFeedFilters([]); setAudienceFilter(""); setFeedQuery(""); }}>Сбросить фильтры</button></div>}
+      {activeFilterCount > 0 && !moreEvents.length && <div className="feed-empty"><Sprout size={34}/><h2>Таких дел пока не нашли</h2><p>Убери один из фильтров — покажем ближайшие варианты.</p><button className="secondary" onClick={() => { setDifficultyFilter(""); setDateFilter(""); setTimeFilter(""); setFormatFilter(""); setAudienceFilter(""); setFeedQuery(""); }}>Сбросить фильтры</button></div>}
     </section>;
   }
   function ProfilePage() {
-    const interactions = data.user.recommendation?.interactions || [];
-    const likedCount = interactions.filter((item) => item.action === "like").length;
-    const skippedCount = interactions.filter((item) => item.action === "skip").length;
-    const selectedInterests = new Set(profile.interests || []);
-    const vectorTaste = Object.entries(data.user.recommendation?.vector || {})
-      .filter(([key]) => key.startsWith("theme_"))
-      .map(([key, weight]) => ({ id: key.slice(6), weight: Number(weight) || 0 }));
-    const taste = (recommendations.taste?.length ? recommendations.taste : vectorTaste)
-      .filter((item) => themeMeta[item.id])
-      .sort((a, b) => b.weight - a.weight)
-      .slice(0, 6);
-    const likedEvents = [...interactions]
-      .reverse()
-      .filter((item) => item.action === "like")
-      .map((item) => catalogById.get(item.eventId))
-      .filter((event, index, list) => event && list.findIndex((candidate) => candidate.id === event.id) === index)
-      .slice(0, 4);
-    const ownPlans = data.plans.filter((item) => item.owner === data.user.id);
-    const currentPlans = ownPlans.filter((item) => !["cancelled", "done"].includes(item.status));
-    const completedPlans = ownPlans.filter((item) => item.status === "done");
-    const achievements = [
-      { title: "Выбрал направления", text: "Не меньше пяти тем для первой настройки", unlocked: selectedInterests.size >= 5, icon: Target },
-      { title: "Настроил ленту", text: "Прошёл первые 12 выборов", unlocked: data.user.onboarded || interactions.filter((item) => item.context === "calibration").length >= 12, icon: SlidersHorizontal },
-      { title: "Нашёл отклик", text: "Отметил первое подходящее дело", unlocked: likedCount > 0, icon: Heart },
-      { title: "Составил план", text: "Сохранил дело и начал подготовку", unlocked: ownPlans.length > 0, icon: ListChecks },
-      { title: "Сделал первый шаг", text: "Сохранил завершённое посещение", unlocked: completedPlans.length > 0, icon: Sprout },
-      { title: "Сад растёт", text: "Завершил три разных добрых дела", unlocked: completedPlans.length >= 3, icon: Award },
-    ];
-    const unlockedCount = achievements.filter((item) => item.unlocked).length;
-    return <section className="profile-page">
-      <header className="profile-hero">
-        <div className="profile-avatar">{data.user.name.slice(0, 1).toUpperCase()}</div>
-        <div><span className="eyebrow">ТВОЙ ПУТЬ В ВОЛОНТЁРСТВЕ</span><h1>{data.user.name}</h1><p>{profile.city || "Москва"} · рекомендации меняются вместе с твоими выборами</p></div>
-        <button className="profile-settings-button" aria-label="Настройки профиля" onClick={() => setSettings(true)}><Settings size={18}/></button>
-      </header>
-
-      <div className="profile-stat-strip" aria-label="Личная статистика">
-        <div><strong>{likedCount}</strong><span>понравилось</span></div>
-        <div><strong>{currentPlans.length}</strong><span>в плане</span></div>
-        <div><strong>{completedPlans.length}</strong><span>завершено</span></div>
-        <div><strong>{unlockedCount}/{achievements.length}</strong><span>достижений</span></div>
-      </div>
-
-      <section className="profile-section profile-taste">
-        <div className="profile-section-heading"><div><span className="eyebrow">ТВОИ ИНТЕРЕСЫ</span><h2>Что тебе сейчас ближе</h2></div><button className="text-button" onClick={() => { setInterestSelection(profile.interests || []); setOnboard(true); }}>Изменить</button></div>
-        <div className="profile-taste-list">{taste.map((item) => { const percentage = Math.round(item.weight * 100); return <div className="profile-taste-row" key={item.id}><span className="profile-taste-icon">{themeMeta[item.id][0]}</span><div><div><strong>{themeMeta[item.id][1]}</strong><span>{percentage}%{selectedInterests.has(item.id) ? " · выбрано тобой" : ""}</span></div><i><b style={{ width: `${percentage}%` }}/></i></div></div>; })}</div>
-        {!taste.length && <p className="profile-empty-note">Выбери интересы — здесь появится понятная карта предпочтений.</p>}
-      </section>
-
-      <section className="profile-section">
-        <div className="profile-section-heading"><div><span className="eyebrow">ПОЧЕМУ ТАКАЯ ЛЕНТА</span><h2>Из чего складываются рекомендации</h2></div></div>
-        <div className="recommendation-reasons">
-          <div><span>01</span><p><strong>Темы</strong> Учитываем {selectedInterests.size || "ещё не выбранные"} направлений, которые ты отметил в начале.</p></div>
-          <div><span>02</span><p><strong>Твои реакции</strong> {likedCount} подходящих и {skippedCount} пропущенных дел уточняют формат, темп и темы.</p></div>
-          <div><span>03</span><p><strong>Реальные шаги</strong> План и завершённое дело влияют сильнее обычного свайпа.</p></div>
-          <div><span>04</span><p><strong>Условия</strong> Сложность, формат, длительность и возможность пойти вместе помогают поставить удобные дела выше.</p></div>
+    const completedCount = data.plans.filter((item) => item.owner === data.user.id && item.status === "done").length;
+    const lastDigit = completedCount % 10;
+    const lastTwo = completedCount % 100;
+    const deedLabel = lastDigit === 1 && lastTwo !== 11
+      ? "доброе дело"
+      : [2, 3, 4].includes(lastDigit) && !(lastTwo >= 12 && lastTwo <= 14)
+        ? "добрых дела"
+        : "добрых дел";
+    const displayName = data.user.name || "Друг";
+    return <section className="profile-garden-page" aria-label="Профиль и личный сад">
+      <Garden data={data}/>
+      <header className="profile-garden-hud">
+        <div className="profile-hud-person">
+          <span className="profile-hud-avatar" aria-hidden="true">{displayName.slice(0, 1).toUpperCase()}</span>
+          <strong>{displayName}</strong>
         </div>
-      </section>
-
-      <section className="profile-section profile-plan-full">
-        <div className="profile-section-heading"><div><span className="eyebrow">МОЙ ПЛАН</span><h2>{active.length ? "Ближайшие шаги" : completedPlans.length ? "Твои завершённые дела" : "Первый план ещё впереди"}</h2></div></div>
-        <p className="profile-section-intro">Здесь можно подготовиться, уточнить встречу, позвать друга и сохранить результат — всё прямо в профиле.</p>
-        {active.length ? active.map((item) => <PlanItem key={item.id} p={item}/>) : <Empty title="Здесь появится твой план" text="Выбери одно дело. Мы поможем разобраться с деталями, написать организатору и позвать друга." />}
-        {data.plans.some((item) => item.status === "cancelled") && <p className="notice">Ты отменил(а) прошлый план. Это нормально — следующее дело можно выбрать, когда будет удобно.</p>}
-      </section>
-
-      {likedEvents.length > 0 && <section className="profile-section"><div className="profile-section-heading"><div><span className="eyebrow">СОХРАНИЛОСЬ В ПАМЯТИ</span><h2>Дела, которые тебе понравились</h2></div></div><div className="profile-liked-list">{likedEvents.map((event) => <button key={event.id} onClick={() => setDetail(event)}><span>{themeMeta[event.theme]?.[0] || "🌱"}</span><div><strong>{event.short}</strong><small>{themeTitle(event)} · {event.city || (event.online ? "Онлайн" : "Место уточняется")}</small></div><ChevronRight size={17}/></button>)}</div></section>}
-
-      <section className="profile-section">
-        <div className="profile-section-heading"><div><h2>Достижения</h2></div></div>
-        <div className="achievement-grid">{achievements.map(({ title, text, unlocked, icon: Icon }) => <div className={unlocked ? "achievement unlocked" : "achievement"} key={title}><span><Icon size={19}/></span><div><strong>{title}</strong><p>{text}</p></div>{unlocked && <Check size={16}/>}</div>)}</div>
-      </section>
+        <div className="profile-hud-deeds" aria-label={`${completedCount} ${deedLabel}`}>
+          <span className="profile-hud-sprout" aria-hidden="true"><Sprout size={24}/></span>
+          <strong>{completedCount}</strong>
+          <span>{deedLabel}</span>
+        </div>
+      </header>
     </section>;
   }
   function SwipeExperience() {
@@ -1273,102 +1261,9 @@ function App() {
             <span className="eyebrow">{detail.city} · ДОБРО</span>
             <h1>{detail.short}</h1>
             <p className="lead">{detail.intro}</p>
-            <div className="source-note">
-              <ShieldCheck size={21} />
-              <div>
-                <strong>{detail.support}</strong>
-                <p>{detail.why}</p>
-              </div>
-            </div>
-            {detail.annotation && <section className="fit-panel">
-              <div className="fit-heading">
-                <div><span className="eyebrow">РАЗМЕТКА УСЛОВИЙ</span><h2>Подойдёт ли мне?</h2></div>
-                <span className={`quality-mark ${detail.annotation.quality.status === "suitable" ? "ready" : "ask"}`}>{detail.annotation.quality.status === "suitable" ? "Можно показывать" : "Нужно уточнить"}</span>
-              </div>
-              <div className="fit-scores">
-                <div className="fit-score"><span>Для первого раза</span><strong>{detail.annotation.firstTime.score ?? "—"}<small>/100</small></strong><div className="score-track" aria-hidden="true"><i style={{ width: `${detail.annotation.firstTime.score ?? 0}%` }}/></div></div>
-                <div className="fit-score complexity"><span>Сложность</span><strong>{detail.annotation.complexity.overall ?? "—"}<small>/100</small></strong><div className="score-track" aria-hidden="true"><i style={{ width: `${detail.annotation.complexity.overall ?? 0}%` }}/></div></div>
-                <div className="fit-fact"><span>Формат</span><strong>{formatLabels[detail.annotation.format] || "Уточняется"}</strong></div>
-                <div className="fit-fact"><span>Участие</span><strong>{commitmentLabels[detail.annotation.participation.commitment]}</strong></div>
-              </div>
-              <p className="fit-explanation">{detail.annotation.firstTime.explanation}</p>
-              {detail.annotation.firstTime.positives.length > 0 && <div className="fit-list good"><span>Что помогает начать</span><div>{detail.annotation.firstTime.positives.slice(0, 5).map((item) => <i key={item}><Check size={13}/>{positiveLabels[item] || item}</i>)}</div></div>}
-              {detail.annotation.firstTime.concerns.length > 0 && <div className="fit-list concern"><span>Что учесть</span><div>{detail.annotation.firstTime.concerns.slice(0, 4).map((item) => <i key={item}>{concernLabels[item] || item}</i>)}</div></div>}
-              {detail.annotation.requirements.unknownConditions.length > 0 && <p className="ask-ahead"><MessageCircle size={16}/><span><strong>Спроси заранее:</strong> {detail.annotation.requirements.unknownConditions.slice(0, 5).map((item) => unknownLabels[item] || item).join(", ")}.</span></p>}
-              <details className="annotation-details">
-                <summary>Все условия дела <ChevronRight size={16}/></summary>
-                <div className="annotation-details-body">
-                  {detail.annotation.structuredTasks.length > 0 && <div className="annotation-task-list"><span>Что предстоит делать</span><ul>{detail.annotation.structuredTasks.slice(0, 6).map((task) => <li key={task}>{task}</li>)}</ul></div>}
-                  <div className="annotation-axis-grid">
-                    {complexityAxes.map(([key, label]) => <div key={key}><span>{label}</span><strong>{annotationValueLabels[detail.annotation.complexity[key]] || detail.annotation.complexity[key]}</strong></div>)}
-                    <div><span>Можно участвовать</span><strong>{detail.annotation.participation.modes.map((item) => annotationValueLabels[item] || item).join(", ")}</strong></div>
-                  </div>
-                  {(detail.annotation.requirements.ownResources.length > 0 || detail.annotation.requirements.additionalPrerequisites.length > 0) && <div className="annotation-requirements">
-                    {detail.annotation.requirements.ownResources.length > 0 && <p><span>Понадобится:</span> {detail.annotation.requirements.ownResources.map((item) => annotationValueLabels[item] || item).join(", ")}.</p>}
-                    {detail.annotation.requirements.additionalPrerequisites.length > 0 && <p><span>Перед участием:</span> {detail.annotation.requirements.additionalPrerequisites.map((item) => annotationValueLabels[item] || item).join(", ")}.</p>}
-                  </div>}
-                </div>
-              </details>
-              {detail.annotation.alternativesCount > 1 && <p className="vacancy-note">У события есть ещё {detail.annotation.alternativesCount - 1} {detail.annotation.alternativesCount === 2 ? "роль" : "роли"}. Мы показываем наиболее подходящую для первого шага.</p>}
-            </section>}
-            <h2>Как сделать первый шаг</h2>
-            <ol className="first-steps">
-              <li>
-                <span>01</span>
-                <div>
-                  <strong>Сначала познакомиться</strong>
-                  <p>{detail.first}</p>
-                </div>
-              </li>
-              <li>
-                <span>02</span>
-                <div>
-                  <strong>Договориться о понятном визите</strong>
-                  <p>
-                    Спроси о задачах, длительности, ограничениях и человеке,
-                    который встретит. Короткое знакомство возможно только с
-                    согласия организатора.
-                  </p>
-                </div>
-              </li>
-              <li>
-                <span>03</span>
-                <div>
-                  <strong>Прийти в своём темпе</strong>
-                  <p>
-                    Позови друга, если так спокойнее. Предупреди координатора,
-                    что вы придёте вдвоём.
-                  </p>
-                </div>
-              </li>
-            </ol>
-            <div className="message-draft">
-              <div className="section-head">
-                <h3>
-                  <MessageCircle size={19} />
-                  Первое сообщение уже готово
-                </h3>
-                <Copy size={18} />
-              </div>
-              <p>{`Здравствуйте! Хочу впервые помочь: «${detail.title}». Можно ли прийти новичку? Какие задачи, сколько длится смена, что взять с собой и кто меня встретит? Можно ли прийти с другом? Есть ли ограничения по возрасту или здоровью?`}</p>
-              <button
-                className="secondary"
-                onClick={() =>
-                  copy(
-                    `Здравствуйте! Хочу впервые помочь: «${detail.title}». Можно ли прийти новичку? Какие задачи, сколько длится смена, что взять с собой и кто меня встретит? Можно ли прийти с другом? Есть ли ограничения по возрасту или здоровью?`,
-                  )
-                }
-              >
-                Скопировать сообщение <Copy size={15} />
-              </button>
-              <a href={detail.url} target="_blank" rel="noreferrer">
-                Контакты и запись на ДОБРО <ExternalLink size={15} />
-              </a>
-            </div>
-            <h3>Что известно из источника</h3>
             <dl className="facts">
               <div>
-                <dt>Адрес в карточке</dt>
+                <dt>Адрес</dt>
                 <dd>{detail.address}</dd>
               </div>
               <div>
@@ -1379,15 +1274,14 @@ function App() {
                 </dd>
               </div>
               <div>
-                <dt>Длительность и возраст</dt>
-                <dd>{detail.annotation?.facts?.exactDurationMinutes ? `${detail.annotation.facts.exactDurationMinutes} мин.` : "Длительность уточняется"}{detail.annotation?.facts?.minimumAge ? ` · ${detail.annotation.facts.minimumAge}+` : ""}</dd>
+                <dt>Длительность</dt>
+                <dd>{detail.annotation?.facts?.exactDurationMinutes ? `${detail.annotation.facts.exactDurationMinutes} мин.` : "Не указана"}</dd>
+              </div>
+              <div>
+                <dt>Возраст</dt>
+                <dd>{detail.annotation?.facts?.minimumAge ? `${detail.annotation.facts.minimumAge}+` : "Не указан"}</dd>
               </div>
             </dl>
-            <p className="small-text muted">
-              Выгрузка от 9 сентября 2026. Период программы не означает
-              ежедневные смены. Свободные места и актуальные условия проверяй на
-              странице организатора.
-            </p>
             <details>
               <summary>Оригинальное описание ДОБРО</summary>
               <p className="original">{detail.description}</p>
@@ -1428,27 +1322,22 @@ function App() {
   else if (tab === "home")
     content = calibrationDone ? <CalibrationComplete /> : ["calibration", "daily"].includes(recommendations.stage) ? <SwipeExperience /> : <CatalogFeed />;
   else if (tab === "map")
-    content = <MapErrorBoundary><Suspense fallback={<div className="map-loading">Открываем карту…</div>}><VolunteerMap events={chosen} onSelect={setDetail}/></Suspense></MapErrorBoundary>;
+    content = <MapErrorBoundary><Suspense fallback={<div className="map-loading">Открываем карту…</div>}><VolunteerMap key={selectedCity} events={mapEvents} center={selectedCityOption.center} onSelect={setDetail}/></Suspense></MapErrorBoundary>;
   else if (tab === "profile")
     content = <ProfilePage />;
-  else content = <Garden data={data} />;
+  else content = <CatalogFeed />;
   const cleanScreen = !detail && !onboard && !settings && !invite && !inviteError;
-  if (tab === "garden" && cleanScreen)
-    return <div className="garden-only-shell"><Garden data={data} /><BottomNav garden /></div>;
+  if (tab === "profile" && cleanScreen)
+    return <div className="profile-garden-shell"><ProfilePage /><BottomNav garden /></div>;
   if (tab === "map" && cleanScreen)
-    return <div className="map-only-shell"><ThemeToggle floating/><MapErrorBoundary><Suspense fallback={<div className="map-loading">Открываем карту…</div>}><VolunteerMap events={chosen} onSelect={setDetail}/></Suspense></MapErrorBoundary><BottomNav garden /></div>;
+    return <div className="map-only-shell"><ThemeToggle floating/><MapErrorBoundary><Suspense fallback={<div className="map-loading">Открываем карту…</div>}><VolunteerMap key={selectedCity} events={mapEvents} center={selectedCityOption.center} onSelect={setDetail}/></Suspense></MapErrorBoundary><BottomNav garden /></div>;
   if (tab === "home" && cleanScreen && (calibrationDone || ["calibration", "daily"].includes(recommendations.stage)))
     return <div className="swipe-only-shell"><ThemeToggle floating/>{calibrationDone ? <CalibrationComplete /> : <SwipeExperience />}{toast && <div className="toast" role="status"><Check size={18}/>{toast}<button aria-label="Закрыть уведомление" onClick={() => setToast("")}><X size={16}/></button></div>}</div>;
   return (
     <div className="app">
       <aside className="sidebar">
-        <button className="brand" onClick={() => go("home")}>
-          <span className="brand-icon">
-            <Sprout size={25} />
-          </span>
-          <span>
-            первый шаг<span className="brand-sub">начать помогать — проще</span>
-          </span>
+        <button className="brand" aria-label="хелпи — на главную" onClick={() => go("home")}>
+          <HelpiWordmark />
         </button>
         <nav aria-label="Основная навигация">
           {nav.map(([id, I, label]) => (
@@ -1491,15 +1380,9 @@ function App() {
       </aside>
       <div className="workspace">
         <header className="topbar">
-          <span className="mobile-brand">
-            <Sprout size={21} />
-            первый шаг
-          </span>
+          <span className="mobile-brand"><HelpiWordmark /></span>
           <div>
-             <span className="location">
-              <MapPin size={15} />
-               Москва
-             </span>
+             <CityPicker />
              <ThemeToggle />
             <button
               className="top-settings"
@@ -1521,7 +1404,7 @@ function App() {
           {content}
         </main>
         <footer className="app-footer">
-          <span>Первый шаг © 2026</span>
+          <span>хелпи © 2026</span>
           <span>Реальные дела · данные ДОБРО</span>
         </footer>
       </div>

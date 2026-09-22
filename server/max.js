@@ -74,7 +74,7 @@ export function appButton({ text, botUsername, appUrl, payload = "" }) {
 }
 
 export async function sendMessage(token, destination, text, { botUsername, appUrl, payload } = {}) {
-  const attachments = appUrl ? [{ type: "inline_keyboard", payload: { buttons: [[appButton({ text: "Открыть «Первый шаг»", botUsername, appUrl, payload })]] } }] : undefined;
+  const attachments = appUrl ? [{ type: "inline_keyboard", payload: { buttons: [[appButton({ text: "Открыть «хелпи»", botUsername, appUrl, payload })]] } }] : undefined;
   return maxCall(token, "/messages", { method: "POST", query: { [destination.kind]: destination.id }, payload: { text, ...(attachments ? { attachments } : {}) } });
 }
 

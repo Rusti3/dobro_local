@@ -156,7 +156,7 @@ export function sourceToCatalog(event, vacancies, matchedCities = []) {
   };
 }
 
-export function dobroCities(value = process.env.CATALOG_CITIES || "Москва") {
+export function dobroCities(value = process.env.CATALOG_CITIES || "Москва,Санкт-Петербург,Казань,Рыбинск") {
   return unique(String(value).split(",").map((item) => item.trim())).map((name) => ({ name, settlement: name }));
 }
 

@@ -201,7 +201,7 @@ async function webhook(req, res) {
         attachments: [{
           type: "inline_keyboard",
           payload: { buttons: [[appButton({
-            text: invite ? "Открыть приглашение" : "Открыть «Первый шаг»",
+            text: invite ? "Открыть приглашение" : "Открыть «хелпи»",
             botUsername,
             appUrl,
             payload,

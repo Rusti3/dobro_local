@@ -19,7 +19,7 @@ x-app-environment: &app-environment
   LLM_API_KEY: ${LLM_API_KEY:-}
   LLM_BASE_URL: ${DOCKER_LLM_BASE_URL:-http://host.docker.internal:8080/v1}
   LLM_MODEL: ${LLM_MODEL:-gpt-5.6-terra}
-  CATALOG_CITIES: ${CATALOG_CITIES:-Москва}
+  CATALOG_CITIES: ${CATALOG_CITIES:-Москва,Санкт-Петербург,Казань,Рыбинск}
   CATALOG_SYNC_ENABLED: ${CATALOG_SYNC_ENABLED:-true}
   CATALOG_SYNC_ON_START: ${CATALOG_SYNC_ON_START:-true}
   CATALOG_SYNC_INTERVAL_MS: ${CATALOG_SYNC_INTERVAL_MS:-3600000}

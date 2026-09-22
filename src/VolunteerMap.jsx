@@ -40,12 +40,12 @@ const toGeoJSON = (events) => ({
     })),
 });
 
-export default function VolunteerMap({ events, onSelect }) {
+export default function VolunteerMap({ events, onSelect, center = [37.6173, 55.7558] }) {
   const host = useRef(null);
   const map = useRef(null);
   const pins = useRef(new Map());
-  const latest = useRef({ events, onSelect });
-  latest.current = { events, onSelect };
+  const latest = useRef({ events, onSelect, center });
+  latest.current = { events, onSelect, center };
   const [ready, setReady] = useState(false);
   const [error, setError] = useState("");
   const [locating, setLocating] = useState(false);
@@ -61,7 +61,7 @@ export default function VolunteerMap({ events, onSelect }) {
     try {
       instance = new maplibregl.Map({
         container: host.current,
-        center: [37.617, 55.759],
+        center,
         zoom: 10.5,
         maxZoom: 19,
         minZoom: 3,
@@ -78,10 +78,6 @@ export default function VolunteerMap({ events, onSelect }) {
     }
 
     map.current = instance;
-    instance.addControl(
-      new maplibregl.NavigationControl({ showCompass: false }),
-      "top-right",
-    );
     instance.on("error", () => {
       if (!disposed)
         setError("Не удалось загрузить карту. Проверь подключение к интернету.");
@@ -240,6 +236,8 @@ export default function VolunteerMap({ events, onSelect }) {
           new maplibregl.LngLatBounds(),
         );
         instance.fitBounds(bounds, { padding: 54, maxZoom: 11, duration: 0 });
+      } else {
+        instance.jumpTo({ center: latest.current.center, zoom: 10.5 });
       }
       syncPins();
     }
