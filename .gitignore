@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+var/
+test-results/
+.vercel/
+public/maplibre/
+nature-preview.jpg

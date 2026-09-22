@@ -1,0 +1,14 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "functions": {
+    "api/[[...path]].js": {
+      "includeFiles": "{russiantrustedca.pem,data/catalog.json}"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api/[[...path]].js" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

@@ -1,0 +1,1748 @@
+{
+  "datasetVersion": "2026-09-21.1",
+  "schemaVersion": "1.1.0",
+  "sourceCatalog": "data/catalog.json",
+  "catalogSize": 56,
+  "sampleSize": 15,
+  "annotationMethod": "manual_stratified_review",
+  "selectionRationale": "Covers all four quality states, frequent DOBRO cause areas, online and on-site work, one-off and recurring commitments, beginner-friendly and high-responsibility tasks, plus missing-information cases.",
+  "items": [
+    {
+      "eventId": "11597695",
+      "expected": {
+        "schemaVersion": "1.1.0",
+        "eventId": "11597695",
+        "quality": {
+          "status": "suitable",
+          "taskClarity": "clear",
+          "reasons": [
+            "clear_task",
+            "sufficient_conditions"
+          ],
+          "explanation": "Перечислены обязанности, вводный инструктаж и сопровождение координатора."
+        },
+        "classification": {
+          "causeAreas": [
+            "animal_welfare"
+          ],
+          "beneficiaryGroups": [
+            "animals"
+          ],
+          "volunteerTasks": [
+            "animal_care",
+            "cleaning_improvement",
+            "event_guest_support"
+          ],
+          "formats": [
+            "on_site"
+          ],
+          "participationModes": [
+            "small_group"
+          ],
+          "commitment": "regular",
+          "scheduleSpecificity": "recurring_schedule"
+        },
+        "requirements": {
+          "minimumAge": 14,
+          "ownResources": [
+            "none_stated"
+          ],
+          "prerequisites": [
+            "training"
+          ],
+          "unknownConditions": [
+            "duration",
+            "exact_time"
+          ]
+        },
+        "complexity": {
+          "physicalLoad": "light",
+          "emotionalLoad": "moderate",
+          "skillRequirement": "basic_briefing",
+          "socialLoad": "public_facing",
+          "responsibility": "medium_independent",
+          "entryBarrier": "briefing",
+          "timeCommitment": "regular",
+          "overall": 3,
+          "explanation": "Специальная квалификация не заявлена, но есть уход за животными, посетители и регулярные смены."
+        },
+        "firstTimeFit": {
+          "verdict": "conditional",
+          "score": 66,
+          "positives": [
+            "clear_duties",
+            "briefing_provided",
+            "coordinator_support"
+          ],
+          "concerns": [
+            "long_or_regular_commitment"
+          ],
+          "explanation": "Новичка инструктируют и сопровождают, но формат предполагает регулярные дежурства."
+        },
+        "feedSignals": {
+          "friendsAllowed": "unknown",
+          "weekendEvidence": "not_stated",
+          "shortDuration": "unknown",
+          "knownDurationMinutes": null,
+          "remoteTask": "no",
+          "calmTask": "no",
+          "firstTimeCandidate": "conditional"
+        },
+        "evidence": [
+          {
+            "target": "quality_status",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Волонтёры участвуют в сменных дежурствах, помогают в уходе за кошками, кормлении, поддержании порядка и взаимодействии с посетителями.",
+            "interpretation": "Обязанности перечислены конкретно."
+          },
+          {
+            "target": "volunteer_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "помогают в уходе за кошками, кормлении, поддержании порядка",
+            "interpretation": "Подтверждены уход за животными и уборка."
+          },
+          {
+            "target": "first_time_fit",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Перед началом работы проводится вводный инструктаж, все задачи выполняются под сопровождением координатора.",
+            "interpretation": "Есть инструктаж и поддержка на месте."
+          }
+        ],
+        "confidence": 0.97,
+        "shortExplanation": "Понятная регулярная помощь кошкам с инструктажем и координатором; длительность смены нужно уточнить.",
+        "vacancyId": null
+      }
+    },
+    {
+      "eventId": "11521651",
+      "expected": {
+        "schemaVersion": "1.1.0",
+        "eventId": "11521651",
+        "quality": {
+          "status": "suitable",
+          "taskClarity": "clear",
+          "reasons": [
+            "clear_task",
+            "sufficient_conditions"
+          ],
+          "explanation": "Задача, обязательное согласование и порядок записи описаны."
+        },
+        "classification": {
+          "causeAreas": [
+            "elderly_support",
+            "animal_welfare"
+          ],
+          "beneficiaryGroups": [
+            "elderly_people"
+          ],
+          "volunteerTasks": [
+            "companionship",
+            "visiting"
+          ],
+          "formats": [
+            "field_trip"
+          ],
+          "participationModes": [
+            "solo"
+          ],
+          "commitment": "flexible",
+          "scheduleSpecificity": "by_agreement"
+        },
+        "requirements": {
+          "minimumAge": null,
+          "ownResources": [
+            "own_pet"
+          ],
+          "prerequisites": [
+            "none_stated"
+          ],
+          "unknownConditions": [
+            "duration",
+            "exact_time"
+          ]
+        },
+        "complexity": {
+          "physicalLoad": "light",
+          "emotionalLoad": "moderate",
+          "skillRequirement": "none",
+          "socialLoad": "small_group",
+          "responsibility": "medium_independent",
+          "entryBarrier": "registration",
+          "timeCommitment": "unknown",
+          "overall": 2,
+          "explanation": "Специальные навыки не заявлены, но нужно отвечать за своего питомца и общаться с пожилыми людьми."
+        },
+        "firstTimeFit": {
+          "verdict": "conditional",
+          "score": 62,
+          "positives": [
+            "clear_duties",
+            "flexible_schedule"
+          ],
+          "concerns": [
+            "own_resource_required",
+            "unclear_conditions"
+          ],
+          "explanation": "Задача понятна, но нужен собственный питомец, а длительность визита не указана."
+        },
+        "feedSignals": {
+          "friendsAllowed": "unknown",
+          "weekendEvidence": "not_stated",
+          "shortDuration": "unknown",
+          "knownDurationMinutes": null,
+          "remoteTask": "no",
+          "calmTask": "unknown",
+          "firstTimeCandidate": "conditional"
+        },
+        "evidence": [
+          {
+            "target": "quality_status",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Мы выберем удобную для всех дату приезда в пансионат.",
+            "interpretation": "Порядок согласования даты указан."
+          },
+          {
+            "target": "volunteer_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "прийти в пансионат для пожилых людей со своими собачками",
+            "interpretation": "Подтверждён визит с собственным питомцем."
+          },
+          {
+            "target": "first_time_fit",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Пришлите, пожалуйста, фотографию вашего питомца",
+            "interpretation": "Для участия нужен собственный питомец и предварительное согласование."
+          }
+        ],
+        "confidence": 0.94,
+        "shortExplanation": "Понятный визит к пожилым людям с собственной собакой; точное время и длительность согласуются отдельно.",
+        "vacancyId": null
+      }
+    },
+    {
+      "eventId": "11675000",
+      "expected": {
+        "schemaVersion": "1.1.0",
+        "eventId": "11675000",
+        "quality": {
+          "status": "clarification_required",
+          "taskClarity": "partial",
+          "reasons": [
+            "vague_duties",
+            "missing_time",
+            "missing_duration"
+          ],
+          "explanation": "Описаны площадки и направления, но не конкретные обязанности и расписание волонтёра."
+        },
+        "classification": {
+          "causeAreas": [
+            "disability_inclusion",
+            "culture_arts"
+          ],
+          "beneficiaryGroups": [
+            "people_with_disabilities"
+          ],
+          "volunteerTasks": [
+            "workshop_facilitation",
+            "companionship"
+          ],
+          "formats": [
+            "on_site"
+          ],
+          "participationModes": [
+            "unknown"
+          ],
+          "commitment": "unknown",
+          "scheduleSpecificity": "unknown"
+        },
+        "requirements": {
+          "minimumAge": 18,
+          "ownResources": [
+            "none_stated"
+          ],
+          "prerequisites": [
+            "application",
+            "training"
+          ],
+          "unknownConditions": [
+            "exact_duties",
+            "exact_time",
+            "duration",
+            "group_participation"
+          ]
+        },
+        "complexity": {
+          "physicalLoad": "unknown",
+          "emotionalLoad": "moderate",
+          "skillRequirement": "basic_briefing",
+          "socialLoad": "small_group",
+          "responsibility": "high_vulnerable_people",
+          "entryBarrier": "application_training",
+          "timeCommitment": "unknown",
+          "overall": 3,
+          "explanation": "Есть вводная встреча, но конкретная роль и объём обязательств определяются позднее."
+        },
+        "firstTimeFit": {
+          "verdict": "conditional",
+          "score": 51,
+          "positives": [
+            "briefing_provided",
+            "coordinator_support",
+            "choice_of_tasks"
+          ],
+          "concerns": [
+            "unclear_duties",
+            "application_or_selection",
+            "high_responsibility"
+          ],
+          "explanation": "Организатор обещает подобрать формат, однако новичку заранее не видны обязанности и график."
+        },
+        "feedSignals": {
+          "friendsAllowed": "unknown",
+          "weekendEvidence": "not_stated",
+          "shortDuration": "unknown",
+          "knownDurationMinutes": null,
+          "remoteTask": "no",
+          "calmTask": "unknown",
+          "firstTimeCandidate": "conditional"
+        },
+        "evidence": [
+          {
+            "target": "quality_status",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Всё расскажем и подберём комфортный формат участия",
+            "interpretation": "Формат существует, но определяется только после обращения."
+          },
+          {
+            "target": "volunteer_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "керамические мастерские, а также - кулинарная, столярная, швейная, экологическая",
+            "interpretation": "Направления площадок известны, конкретная роль не описана."
+          },
+          {
+            "target": "first_time_fit",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "заполните анкету на нашем сайте и приходите на вводную встречу",
+            "interpretation": "Есть анкета и вводный этап."
+          }
+        ],
+        "confidence": 0.91,
+        "shortExplanation": "Инклюзивное волонтёрство с вводной встречей, но конкретную роль, расписание и длительность нужно уточнить.",
+        "vacancyId": null
+      }
+    },
+    {
+      "eventId": "11780208",
+      "expected": {
+        "schemaVersion": "1.1.0",
+        "eventId": "11780208",
+        "quality": {
+          "status": "human_review",
+          "taskClarity": "clear",
+          "reasons": [
+            "potential_safety_risk",
+            "missing_requirements"
+          ],
+          "explanation": "Заявлен возраст от 8 лет, при этом участнику предлагают самостоятельно выбирать внешний приют; условия сопровождения несовершеннолетних не описаны."
+        },
+        "classification": {
+          "causeAreas": [
+            "animal_welfare"
+          ],
+          "beneficiaryGroups": [
+            "animals"
+          ],
+          "volunteerTasks": [
+            "dog_walking",
+            "animal_care",
+            "cleaning_improvement",
+            "photography_video"
+          ],
+          "formats": [
+            "field_trip"
+          ],
+          "participationModes": [
+            "solo"
+          ],
+          "commitment": "flexible",
+          "scheduleSpecificity": "by_agreement"
+        },
+        "requirements": {
+          "minimumAge": 8,
+          "ownResources": [
+            "smartphone"
+          ],
+          "prerequisites": [
+            "source_registration"
+          ],
+          "unknownConditions": [
+            "training",
+            "supervision",
+            "physical_requirements",
+            "duration"
+          ]
+        },
+        "complexity": {
+          "physicalLoad": "moderate",
+          "emotionalLoad": "moderate",
+          "skillRequirement": "unknown",
+          "socialLoad": "low",
+          "responsibility": "safety_critical",
+          "entryBarrier": "registration",
+          "timeCommitment": "unknown",
+          "overall": 4,
+          "explanation": "Выгул животных и уборка вольеров требуют соблюдения правил безопасности, которые не приведены."
+        },
+        "firstTimeFit": {
+          "verdict": "not_suitable",
+          "score": 28,
+          "positives": [
+            "choice_of_tasks",
+            "flexible_schedule"
+          ],
+          "concerns": [
+            "unclear_conditions",
+            "high_responsibility",
+            "age_or_consent_condition",
+            "safety_needs_review"
+          ],
+          "explanation": "До ручной проверки правил приюта и сопровождения несовершеннолетних карточку нельзя рекомендовать новичкам."
+        },
+        "feedSignals": {
+          "friendsAllowed": "unknown",
+          "weekendEvidence": "not_stated",
+          "shortDuration": "unknown",
+          "knownDurationMinutes": null,
+          "remoteTask": "no",
+          "calmTask": "no",
+          "firstTimeCandidate": "no"
+        },
+        "evidence": [
+          {
+            "target": "quality_status",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Самостоятельно выбери приют и согласуй визит",
+            "interpretation": "Организатор перекладывает выбор внешней площадки на участника."
+          },
+          {
+            "target": "volunteer_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Выгуливаешь пушистых четвероногих друзей, играешь с ними, чистишь вольеры",
+            "interpretation": "Есть физическая работа и прямой контакт с животными."
+          },
+          {
+            "target": "first_time_fit",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Самостоятельно выбери приют и согласуй визит",
+            "interpretation": "Минимальный возраст низкий для самостоятельной работы с незнакомым приютом."
+          }
+        ],
+        "confidence": 0.93,
+        "shortExplanation": "Задачи понятны, но карточка требует ручной проверки безопасности и сопровождения несовершеннолетних.",
+        "vacancyId": null
+      }
+    },
+    {
+      "eventId": "11845173",
+      "expected": {
+        "schemaVersion": "1.1.0",
+        "eventId": "11845173",
+        "quality": {
+          "status": "human_review",
+          "taskClarity": "clear",
+          "reasons": [
+            "specialized_work_without_requirements",
+            "potential_safety_risk"
+          ],
+          "explanation": "Описана техническая работа, но нет требований к опыту, оборудованию и безопасному выполнению."
+        },
+        "classification": {
+          "causeAreas": [
+            "military_support",
+            "humanitarian_aid"
+          ],
+          "beneficiaryGroups": [
+            "military_personnel"
+          ],
+          "volunteerTasks": [
+            "technical_making",
+            "sorting_packing",
+            "donation_collection"
+          ],
+          "formats": [
+            "on_site"
+          ],
+          "participationModes": [
+            "solo"
+          ],
+          "commitment": "unknown",
+          "scheduleSpecificity": "date_window"
+        },
+        "requirements": {
+          "minimumAge": 18,
+          "ownResources": [
+            "materials"
+          ],
+          "prerequisites": [
+            "none_stated"
+          ],
+          "unknownConditions": [
+            "training",
+            "supervision",
+            "equipment",
+            "physical_requirements",
+            "duration"
+          ]
+        },
+        "complexity": {
+          "physicalLoad": "unknown",
+          "emotionalLoad": "low",
+          "skillRequirement": "specialized",
+          "socialLoad": "solitary",
+          "responsibility": "safety_critical",
+          "entryBarrier": "unknown",
+          "timeCommitment": "unknown",
+          "overall": 4,
+          "explanation": "3D-печать изделий требует технических навыков и контроля качества, но условия допуска не описаны."
+        },
+        "firstTimeFit": {
+          "verdict": "not_suitable",
+          "score": 22,
+          "positives": [
+            "clear_duties"
+          ],
+          "concerns": [
+            "specialized_skill",
+            "unclear_conditions",
+            "safety_needs_review"
+          ],
+          "explanation": "Без сведений об обучении и оборудовании техническую задачу нельзя считать безопасной для первого опыта."
+        },
+        "feedSignals": {
+          "friendsAllowed": "unknown",
+          "weekendEvidence": "not_stated",
+          "shortDuration": "unknown",
+          "knownDurationMinutes": null,
+          "remoteTask": "no",
+          "calmTask": "unknown",
+          "firstTimeCandidate": "no"
+        },
+        "evidence": [
+          {
+            "target": "quality_status",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Печать на 3D принтере изделий для нужд бойцов специальной военной операции.",
+            "interpretation": "Это специализированная техническая работа."
+          },
+          {
+            "target": "volunteer_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Изготовление :3D моделей, хвостовиков, накольников на 3д принтере.",
+            "interpretation": "Задача связана с изготовлением деталей на 3D-принтере."
+          },
+          {
+            "target": "first_time_fit",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Закупка пластика, Сбор и подготовка к отправке",
+            "interpretation": "Требуются материалы и несколько этапов работы, но обучение не описано."
+          }
+        ],
+        "confidence": 0.95,
+        "shortExplanation": "Техническая задача ясна, однако требования к навыкам, оборудованию и безопасности нужно проверить вручную.",
+        "vacancyId": null
+      }
+    },
+    {
+      "eventId": "11856256",
+      "expected": {
+        "schemaVersion": "1.1.0",
+        "eventId": "11856256",
+        "quality": {
+          "status": "suitable",
+          "taskClarity": "clear",
+          "reasons": [
+            "clear_task",
+            "sufficient_conditions"
+          ],
+          "explanation": "Приведены задачи, даты, две смены, место и желательное знание языка."
+        },
+        "classification": {
+          "causeAreas": [
+            "education_mentoring",
+            "culture_arts"
+          ],
+          "beneficiaryGroups": [
+            "cultural_audiences"
+          ],
+          "volunteerTasks": [
+            "escort_navigation",
+            "translation_language_support",
+            "event_guest_support"
+          ],
+          "formats": [
+            "field_trip"
+          ],
+          "participationModes": [
+            "small_group"
+          ],
+          "commitment": "multiple_visits",
+          "scheduleSpecificity": "exact_shift"
+        },
+        "requirements": {
+          "minimumAge": 16,
+          "ownResources": [
+            "none_stated"
+          ],
+          "prerequisites": [
+            "language_skill"
+          ],
+          "unknownConditions": [
+            "training",
+            "supervision"
+          ]
+        },
+        "complexity": {
+          "physicalLoad": "light",
+          "emotionalLoad": "low",
+          "skillRequirement": "specialized",
+          "socialLoad": "public_facing",
+          "responsibility": "medium_independent",
+          "entryBarrier": "registration",
+          "timeCommitment": "half_day",
+          "overall": 3,
+          "explanation": "Смена длится 4–5 часов; нужно много общаться и ориентироваться в маршрутах, знание французского желательно."
+        },
+        "firstTimeFit": {
+          "verdict": "conditional",
+          "score": 58,
+          "positives": [
+            "clear_duties",
+            "group_format"
+          ],
+          "concerns": [
+            "specialized_skill",
+            "high_social_load",
+            "high_responsibility"
+          ],
+          "explanation": "Подходит общительному новичку со знанием французского, но требует сопровождать гостей самостоятельно."
+        },
+        "feedSignals": {
+          "friendsAllowed": "unknown",
+          "weekendEvidence": "not_stated",
+          "shortDuration": "no",
+          "knownDurationMinutes": null,
+          "remoteTask": "no",
+          "calmTask": "no",
+          "firstTimeCandidate": "conditional"
+        },
+        "evidence": [
+          {
+            "target": "quality_status",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Даты: 14-22 сентября",
+            "interpretation": "Период участия задан."
+          },
+          {
+            "target": "volunteer_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Сопровождать иностранных гостей из гостиницы в университет и обратно",
+            "interpretation": "Основная задача сформулирована конкретно."
+          },
+          {
+            "target": "first_time_fit",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Очень ждём ребят со знанием французского!",
+            "interpretation": "Языковой навык заметно влияет на пригодность."
+          }
+        ],
+        "confidence": 0.97,
+        "shortExplanation": "Чёткие смены и обязанности по сопровождению; лучше подходит участникам со знанием французского.",
+        "vacancyId": null
+      }
+    },
+    {
+      "eventId": "11798715",
+      "expected": {
+        "schemaVersion": "1.1.0",
+        "eventId": "11798715",
+        "quality": {
+          "status": "hidden",
+          "taskClarity": "missing",
+          "reasons": [
+            "missing_task",
+            "promotional_without_task"
+          ],
+          "explanation": "Текст рекламирует программу фестиваля, но не объясняет, что должен делать волонтёр на застройке."
+        },
+        "classification": {
+          "causeAreas": [
+            "culture_arts"
+          ],
+          "beneficiaryGroups": [
+            "cultural_audiences"
+          ],
+          "volunteerTasks": [
+            "unclear"
+          ],
+          "formats": [
+            "on_site"
+          ],
+          "participationModes": [
+            "unknown"
+          ],
+          "commitment": "one_off",
+          "scheduleSpecificity": "exact_shift"
+        },
+        "requirements": {
+          "minimumAge": 18,
+          "ownResources": [
+            "none_stated"
+          ],
+          "prerequisites": [
+            "none_stated"
+          ],
+          "unknownConditions": [
+            "exact_duties",
+            "physical_requirements",
+            "training",
+            "supervision"
+          ]
+        },
+        "complexity": {
+          "physicalLoad": "unknown",
+          "emotionalLoad": "unknown",
+          "skillRequirement": "unknown",
+          "socialLoad": "unknown",
+          "responsibility": "unknown",
+          "entryBarrier": "unknown",
+          "timeCommitment": "full_day",
+          "overall": null,
+          "explanation": "Без описания волонтёрской роли сложность определить нельзя."
+        },
+        "firstTimeFit": {
+          "verdict": "unknown",
+          "score": null,
+          "positives": [
+            "none_stated"
+          ],
+          "concerns": [
+            "unclear_duties",
+            "unclear_conditions"
+          ],
+          "explanation": "Карточка не содержит обязанностей волонтёра."
+        },
+        "feedSignals": {
+          "friendsAllowed": "unknown",
+          "weekendEvidence": "not_stated",
+          "shortDuration": "no",
+          "knownDurationMinutes": 480,
+          "remoteTask": "no",
+          "calmTask": "unknown",
+          "firstTimeCandidate": "unknown"
+        },
+        "evidence": [
+          {
+            "target": "quality_status",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Фестиваль Фан Станция создан для всех",
+            "interpretation": "Текст описывает впечатления посетителя, а не волонтёрскую работу."
+          },
+          {
+            "target": "volunteer_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Фестиваль Фан Станция (застройка)",
+            "interpretation": "В названии упомянута застройка, но действия и условия не раскрыты."
+          },
+          {
+            "target": "first_time_fit",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Здесь можно соревноваться, творить, знакомиться, фотографироваться, покупать, играть и просто отдыхать",
+            "interpretation": "Это описание посетительской программы, по нему нельзя оценить первый волонтёрский опыт."
+          }
+        ],
+        "confidence": 0.98,
+        "shortExplanation": "Скрыть до уточнения: в карточке есть реклама фестиваля, но нет волонтёрской задачи.",
+        "vacancyId": null
+      }
+    },
+    {
+      "eventId": "11854955",
+      "expected": {
+        "schemaVersion": "1.1.0",
+        "eventId": "11854955",
+        "quality": {
+          "status": "clarification_required",
+          "taskClarity": "clear",
+          "reasons": [
+            "missing_time",
+            "missing_duration",
+            "missing_requirements"
+          ],
+          "explanation": "Удалённые задачи перечислены, но нагрузка, обучение и порядок работы не указаны."
+        },
+        "classification": {
+          "causeAreas": [
+            "poverty_crisis_support",
+            "animal_welfare",
+            "nonprofit_support"
+          ],
+          "beneficiaryGroups": [
+            "families_in_crisis",
+            "animals",
+            "nonprofit_organizations"
+          ],
+          "volunteerTasks": [
+            "fundraising_outreach",
+            "administration_data_entry"
+          ],
+          "formats": [
+            "online"
+          ],
+          "participationModes": [
+            "solo"
+          ],
+          "commitment": "unknown",
+          "scheduleSpecificity": "unknown"
+        },
+        "requirements": {
+          "minimumAge": 16,
+          "ownResources": [
+            "none_stated"
+          ],
+          "prerequisites": [
+            "none_stated"
+          ],
+          "unknownConditions": [
+            "training",
+            "supervision",
+            "duration",
+            "remote_process"
+          ]
+        },
+        "complexity": {
+          "physicalLoad": "minimal",
+          "emotionalLoad": "low",
+          "skillRequirement": "unknown",
+          "socialLoad": "low",
+          "responsibility": "medium_independent",
+          "entryBarrier": "unknown",
+          "timeCommitment": "unknown",
+          "overall": null,
+          "explanation": "Работа удалённая и физически лёгкая, но требования к деловой переписке и объём задач не раскрыты."
+        },
+        "firstTimeFit": {
+          "verdict": "conditional",
+          "score": 48,
+          "positives": [
+            "clear_duties",
+            "remote_format"
+          ],
+          "concerns": [
+            "unclear_conditions"
+          ],
+          "explanation": "Может подойти новичку после уточнения шаблонов, контроля переписки и ожидаемой занятости."
+        },
+        "feedSignals": {
+          "friendsAllowed": "unknown",
+          "weekendEvidence": "not_stated",
+          "shortDuration": "unknown",
+          "knownDurationMinutes": null,
+          "remoteTask": "yes",
+          "calmTask": "yes",
+          "firstTimeCandidate": "conditional"
+        },
+        "evidence": [
+          {
+            "target": "quality_status",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Волонтерство в сфере консультаций и деловой переписки",
+            "interpretation": "Задача реальна и понятна на общем уровне."
+          },
+          {
+            "target": "volunteer_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "рассылка информационных писем в организации, деловая переписка",
+            "interpretation": "Подтверждена удалённая переписка и рассылка."
+          },
+          {
+            "target": "remote_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Онлайн волонтер",
+            "interpretation": "Формат заявлен как онлайн."
+          },
+          {
+            "target": "calm_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "рассылка информационных писем в организации, деловая переписка",
+            "interpretation": "Задача выполняется за компьютером и не содержит признаков физической нагрузки."
+          },
+          {
+            "target": "first_time_fit",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "консультаций и деловой переписки с потенциальными и действующими благотворителями",
+            "interpretation": "Переписка с благотворителями требует уточнить инструкции и контроль."
+          }
+        ],
+        "confidence": 0.89,
+        "shortExplanation": "Конкретная онлайн-переписка, но перед рекомендацией нужно уточнить обучение, контроль и объём работы.",
+        "vacancyId": null
+      }
+    },
+    {
+      "eventId": "11834230",
+      "expected": {
+        "schemaVersion": "1.1.0",
+        "eventId": "11834230",
+        "quality": {
+          "status": "clarification_required",
+          "taskClarity": "missing",
+          "reasons": [
+            "missing_task",
+            "vague_duties",
+            "missing_time",
+            "missing_duration"
+          ],
+          "explanation": "Набор в донорскую команду выглядит реальным, но конкретные роли и график не описаны."
+        },
+        "classification": {
+          "causeAreas": [
+            "donor_movement",
+            "health_medicine"
+          ],
+          "beneficiaryGroups": [
+            "blood_marrow_recipients"
+          ],
+          "volunteerTasks": [
+            "unclear"
+          ],
+          "formats": [
+            "unknown"
+          ],
+          "participationModes": [
+            "small_group"
+          ],
+          "commitment": "unknown",
+          "scheduleSpecificity": "unknown"
+        },
+        "requirements": {
+          "minimumAge": 16,
+          "ownResources": [
+            "none_stated"
+          ],
+          "prerequisites": [
+            "training"
+          ],
+          "unknownConditions": [
+            "exact_duties",
+            "exact_location",
+            "exact_time",
+            "duration",
+            "group_participation"
+          ]
+        },
+        "complexity": {
+          "physicalLoad": "unknown",
+          "emotionalLoad": "moderate",
+          "skillRequirement": "basic_briefing",
+          "socialLoad": "unknown",
+          "responsibility": "medium_independent",
+          "entryBarrier": "briefing",
+          "timeCommitment": "unknown",
+          "overall": null,
+          "explanation": "Обучение обещано, но без списка ролей остальные размерности оценить нельзя."
+        },
+        "firstTimeFit": {
+          "verdict": "conditional",
+          "score": 43,
+          "positives": [
+            "no_experience_required",
+            "briefing_provided",
+            "coordinator_support"
+          ],
+          "concerns": [
+            "unclear_duties",
+            "unclear_conditions"
+          ],
+          "explanation": "Опыт не нужен и обучение обещано, однако сначала необходимо узнать конкретную работу."
+        },
+        "feedSignals": {
+          "friendsAllowed": "unknown",
+          "weekendEvidence": "not_stated",
+          "shortDuration": "unknown",
+          "knownDurationMinutes": null,
+          "remoteTask": "unknown",
+          "calmTask": "unknown",
+          "firstTimeCandidate": "conditional"
+        },
+        "evidence": [
+          {
+            "target": "quality_status",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Сейчас я ищу неравнодушных и ответственных добровольцев в свою команду.",
+            "interpretation": "Есть реальный набор, но нет перечня обязанностей."
+          },
+          {
+            "target": "volunteer_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "даже самая рутинная работа здесь - часть большого и хрупкого процесса",
+            "interpretation": "Работа упомянута только обобщённо."
+          },
+          {
+            "target": "first_time_fit",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Опыт в смежных проектах не обязателен - всему научу.",
+            "interpretation": "Новичков принимают и обещают обучить."
+          }
+        ],
+        "confidence": 0.94,
+        "shortExplanation": "Набор в донорскую команду допускает новичков, но обязанности, формат и график нужно уточнить.",
+        "vacancyId": null
+      }
+    },
+    {
+      "eventId": "11848403",
+      "expected": {
+        "schemaVersion": "1.1.0",
+        "eventId": "11848403",
+        "quality": {
+          "status": "suitable",
+          "taskClarity": "clear",
+          "reasons": [
+            "clear_task",
+            "sufficient_conditions"
+          ],
+          "explanation": "Указаны дата, место, длительность, несколько простых ролей и инструктаж на месте."
+        },
+        "classification": {
+          "causeAreas": [
+            "animal_welfare",
+            "sports_wellbeing"
+          ],
+          "beneficiaryGroups": [
+            "animals"
+          ],
+          "volunteerTasks": [
+            "event_guest_support",
+            "registration_check_in",
+            "photography_video",
+            "sports_marshalling"
+          ],
+          "formats": [
+            "on_site"
+          ],
+          "participationModes": [
+            "large_group"
+          ],
+          "commitment": "one_off",
+          "scheduleSpecificity": "exact_shift"
+        },
+        "requirements": {
+          "minimumAge": 16,
+          "ownResources": [
+            "smartphone"
+          ],
+          "prerequisites": [
+            "source_registration"
+          ],
+          "unknownConditions": [
+            "none"
+          ]
+        },
+        "complexity": {
+          "physicalLoad": "light",
+          "emotionalLoad": "low",
+          "skillRequirement": "basic_briefing",
+          "socialLoad": "public_facing",
+          "responsibility": "low_supervised",
+          "entryBarrier": "registration",
+          "timeCommitment": "half_day",
+          "overall": 2,
+          "explanation": "Роли простые и объясняются на месте, но смена длится 3,5–5 часов и предполагает общение с участниками."
+        },
+        "firstTimeFit": {
+          "verdict": "suitable",
+          "score": 86,
+          "positives": [
+            "clear_duties",
+            "simple_tasks",
+            "briefing_provided",
+            "choice_of_tasks",
+            "group_format"
+          ],
+          "concerns": [
+            "age_or_consent_condition"
+          ],
+          "explanation": "Хороший первый опыт: разовое событие, простые задачи, выбор роли и объяснение на месте."
+        },
+        "feedSignals": {
+          "friendsAllowed": "unknown",
+          "weekendEvidence": "specific_weekend_date",
+          "shortDuration": "no",
+          "knownDurationMinutes": null,
+          "remoteTask": "no",
+          "calmTask": "no",
+          "firstTimeCandidate": "yes"
+        },
+        "evidence": [
+          {
+            "target": "quality_status",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Задачи простые, на месте всё покажем.",
+            "interpretation": "Подтверждены простота и инструктаж."
+          },
+          {
+            "target": "volunteer_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "раздать стартовые номера, награждать медалями, поддерживать на финише",
+            "interpretation": "Роли ассистента перечислены конкретно."
+          },
+          {
+            "target": "weekend_evidence",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "04.10 воскресенье- добрый забег",
+            "interpretation": "Конкретная дата прямо обозначена как воскресенье."
+          },
+          {
+            "target": "first_time_fit",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Задачи простые, на месте всё покажем.",
+            "interpretation": "Карточка явно подходит человеку без опыта."
+          }
+        ],
+        "confidence": 0.98,
+        "shortExplanation": "Разовая воскресная смена с конкретными простыми ролями и обучением на месте.",
+        "vacancyId": null
+      }
+    },
+    {
+      "eventId": "11819270",
+      "expected": {
+        "schemaVersion": "1.1.0",
+        "eventId": "11819270",
+        "quality": {
+          "status": "suitable",
+          "taskClarity": "clear",
+          "reasons": [
+            "clear_task",
+            "sufficient_conditions"
+          ],
+          "explanation": "Подробно описаны роли, инструктаж, правила для несовершеннолетних, место и регулярное расписание."
+        },
+        "classification": {
+          "causeAreas": [
+            "sports_wellbeing",
+            "civic_initiatives"
+          ],
+          "beneficiaryGroups": [
+            "sports_participants",
+            "local_community"
+          ],
+          "volunteerTasks": [
+            "sports_marshalling",
+            "photography_video",
+            "event_guest_support",
+            "registration_check_in"
+          ],
+          "formats": [
+            "on_site"
+          ],
+          "participationModes": [
+            "large_group"
+          ],
+          "commitment": "flexible",
+          "scheduleSpecificity": "recurring_schedule"
+        },
+        "requirements": {
+          "minimumAge": 14,
+          "ownResources": [
+            "smartphone"
+          ],
+          "prerequisites": [
+            "training",
+            "parental_consent",
+            "source_registration"
+          ],
+          "unknownConditions": [
+            "none"
+          ]
+        },
+        "complexity": {
+          "physicalLoad": "light",
+          "emotionalLoad": "low",
+          "skillRequirement": "basic_briefing",
+          "socialLoad": "public_facing",
+          "responsibility": "low_supervised",
+          "entryBarrier": "briefing",
+          "timeCommitment": "up_to_2_hours",
+          "overall": 2,
+          "explanation": "Можно выбрать простую роль, быстро обучиться и помочь в пределах одной короткой смены."
+        },
+        "firstTimeFit": {
+          "verdict": "suitable",
+          "score": 93,
+          "positives": [
+            "clear_duties",
+            "simple_tasks",
+            "briefing_provided",
+            "choice_of_tasks",
+            "short_shift",
+            "group_format"
+          ],
+          "concerns": [
+            "age_or_consent_condition"
+          ],
+          "explanation": "Очень подходящий первый опыт благодаря подробным ролям, инструктажу и короткой смене."
+        },
+        "feedSignals": {
+          "friendsAllowed": "unknown",
+          "weekendEvidence": "explicit_recurring_weekends",
+          "shortDuration": "yes",
+          "knownDurationMinutes": 120,
+          "remoteTask": "no",
+          "calmTask": "no",
+          "firstTimeCandidate": "yes"
+        },
+        "evidence": [
+          {
+            "target": "quality_status",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Все волонтёрские задачи простые, и всему можно быстро научиться.",
+            "interpretation": "Карточка прямо описывает понятный низкий порог входа."
+          },
+          {
+            "target": "volunteer_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Основные волонтёрские роли: — Секундомеры",
+            "interpretation": "Далее приведён подробный список ролей."
+          },
+          {
+            "target": "weekend_evidence",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Старт пробежек всегда по субботам в 9:00.",
+            "interpretation": "Регулярная доступность по субботам указана явно."
+          },
+          {
+            "target": "short_duration",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "2026-09-19T05:30:00.000Z 2026-09-19T07:30:00.000Z",
+            "interpretation": "Начало и конец одной смены дают длительность 120 минут."
+          },
+          {
+            "target": "first_time_fit",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Все волонтёрские задачи простые, и всему можно быстро научиться.",
+            "interpretation": "Организатор прямо подтверждает пригодность для новичков."
+          }
+        ],
+        "confidence": 0.99,
+        "shortExplanation": "Короткая субботняя смена с подробным выбором простых ролей и инструктажем.",
+        "vacancyId": null
+      }
+    },
+    {
+      "eventId": "11627303",
+      "expected": {
+        "schemaVersion": "1.1.0",
+        "eventId": "11627303",
+        "quality": {
+          "status": "clarification_required",
+          "taskClarity": "clear",
+          "reasons": [
+            "clear_task",
+            "missing_time",
+            "missing_duration",
+            "missing_requirements"
+          ],
+          "explanation": "Работа описана, но каждую дату, длительность и конкретную роль нужно отдельно согласовать по телефону."
+        },
+        "classification": {
+          "causeAreas": [
+            "health_medicine",
+            "poverty_crisis_support",
+            "nonprofit_support"
+          ],
+          "beneficiaryGroups": [
+            "families_in_crisis",
+            "people_with_health_conditions",
+            "nonprofit_organizations"
+          ],
+          "volunteerTasks": [
+            "sorting_packing",
+            "photography_video"
+          ],
+          "formats": [
+            "on_site"
+          ],
+          "participationModes": [
+            "solo"
+          ],
+          "commitment": "flexible",
+          "scheduleSpecificity": "by_agreement"
+        },
+        "requirements": {
+          "minimumAge": 16,
+          "ownResources": [
+            "camera"
+          ],
+          "prerequisites": [
+            "none_stated"
+          ],
+          "unknownConditions": [
+            "exact_duties",
+            "exact_time",
+            "duration",
+            "physical_requirements",
+            "training"
+          ]
+        },
+        "complexity": {
+          "physicalLoad": "light",
+          "emotionalLoad": "low",
+          "skillRequirement": "unknown",
+          "socialLoad": "low",
+          "responsibility": "low_supervised",
+          "entryBarrier": "registration",
+          "timeCommitment": "unknown",
+          "overall": null,
+          "explanation": "Фасовка выглядит простой, но объём посылок и требования к фотографу не описаны."
+        },
+        "firstTimeFit": {
+          "verdict": "conditional",
+          "score": 57,
+          "positives": [
+            "clear_duties",
+            "flexible_schedule",
+            "choice_of_tasks"
+          ],
+          "concerns": [
+            "unclear_conditions",
+            "own_resource_required"
+          ],
+          "explanation": "Фасовка может подойти новичку после согласования смены и объёма работы."
+        },
+        "feedSignals": {
+          "friendsAllowed": "unknown",
+          "weekendEvidence": "not_stated",
+          "shortDuration": "unknown",
+          "knownDurationMinutes": null,
+          "remoteTask": "no",
+          "calmTask": "unknown",
+          "firstTimeCandidate": "conditional"
+        },
+        "evidence": [
+          {
+            "target": "quality_status",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "звоните организатору +79857420580 для уточнения конкретной даты и времени",
+            "interpretation": "Дата и время заранее не зафиксированы."
+          },
+          {
+            "target": "volunteer_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Нам постоянно необходима помощь в формировании посылок",
+            "interpretation": "Основная складская задача понятна."
+          },
+          {
+            "target": "first_time_fit",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "В том числе можно поработать и в вечернее время.",
+            "interpretation": "Есть гибкость по времени, но длительность не указана."
+          }
+        ],
+        "confidence": 0.94,
+        "shortExplanation": "Понятная фасовка посылок с гибким временем, но смену, нагрузку и оснащение нужно согласовать.",
+        "vacancyId": null
+      }
+    },
+    {
+      "eventId": "11678900",
+      "expected": {
+        "schemaVersion": "1.1.0",
+        "eventId": "11678900",
+        "quality": {
+          "status": "human_review",
+          "taskClarity": "clear",
+          "reasons": [
+            "vulnerable_people_without_safeguards",
+            "missing_requirements"
+          ],
+          "explanation": "Волонтёр помогает людям с инвалидностью выполнять спортивные упражнения, но обучение и супервизия не описаны."
+        },
+        "classification": {
+          "causeAreas": [
+            "disability_inclusion",
+            "sports_wellbeing",
+            "health_medicine"
+          ],
+          "beneficiaryGroups": [
+            "people_with_disabilities"
+          ],
+          "volunteerTasks": [
+            "sports_marshalling",
+            "companionship"
+          ],
+          "formats": [
+            "on_site"
+          ],
+          "participationModes": [
+            "small_group"
+          ],
+          "commitment": "regular",
+          "scheduleSpecificity": "recurring_schedule"
+        },
+        "requirements": {
+          "minimumAge": 18,
+          "ownResources": [
+            "none_stated"
+          ],
+          "prerequisites": [
+            "none_stated"
+          ],
+          "unknownConditions": [
+            "training",
+            "supervision",
+            "physical_requirements",
+            "duration"
+          ]
+        },
+        "complexity": {
+          "physicalLoad": "moderate",
+          "emotionalLoad": "moderate",
+          "skillRequirement": "unknown",
+          "socialLoad": "small_group",
+          "responsibility": "high_vulnerable_people",
+          "entryBarrier": "unknown",
+          "timeCommitment": "regular",
+          "overall": 4,
+          "explanation": "Регулярная помощь на тренировках связана с физической активностью и ответственностью за участников."
+        },
+        "firstTimeFit": {
+          "verdict": "not_suitable",
+          "score": 31,
+          "positives": [
+            "clear_duties",
+            "group_format"
+          ],
+          "concerns": [
+            "high_responsibility",
+            "long_or_regular_commitment",
+            "unclear_conditions",
+            "safety_needs_review"
+          ],
+          "explanation": "До подтверждения обучения и присутствия тренера задачу не следует рекомендовать для первого раза."
+        },
+        "feedSignals": {
+          "friendsAllowed": "unknown",
+          "weekendEvidence": "not_stated",
+          "shortDuration": "unknown",
+          "knownDurationMinutes": null,
+          "remoteTask": "no",
+          "calmTask": "no",
+          "firstTimeCandidate": "no"
+        },
+        "evidence": [
+          {
+            "target": "quality_status",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "помогать ребятам правильно выполнять упражнения, поддерживать их и направлять",
+            "interpretation": "Есть прямая ответственность за участников тренировки."
+          },
+          {
+            "target": "volunteer_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "во время тренировки будут помогать ребятам правильно выполнять упражнения",
+            "interpretation": "Конкретная задача связана со спортивным сопровождением."
+          },
+          {
+            "target": "commitment",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Тренировки проходят 3 дня в неделю, в понедельник, среду и пятницу.",
+            "interpretation": "Работа регулярная."
+          },
+          {
+            "target": "first_time_fit",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "ребят с Синдромом Дауна",
+            "interpretation": "Нужны подтверждённые правила безопасного и корректного сопровождения."
+          }
+        ],
+        "confidence": 0.95,
+        "shortExplanation": "Важная регулярная задача, но обучение и супервизию при работе с участниками нужно проверить вручную.",
+        "vacancyId": null
+      }
+    },
+    {
+      "eventId": "11855866",
+      "expected": {
+        "schemaVersion": "1.1.0",
+        "eventId": "11855866",
+        "quality": {
+          "status": "hidden",
+          "taskClarity": "missing",
+          "reasons": [
+            "missing_task",
+            "promotional_without_task"
+          ],
+          "explanation": "Описана польза сменной обуви, но нет действий волонтёра, способа участия или результата смены."
+        },
+        "classification": {
+          "causeAreas": [
+            "health_medicine",
+            "education_mentoring"
+          ],
+          "beneficiaryGroups": [
+            "children"
+          ],
+          "volunteerTasks": [
+            "unclear"
+          ],
+          "formats": [
+            "on_site"
+          ],
+          "participationModes": [
+            "unknown"
+          ],
+          "commitment": "unknown",
+          "scheduleSpecificity": "date_window"
+        },
+        "requirements": {
+          "minimumAge": 14,
+          "ownResources": [
+            "none_stated"
+          ],
+          "prerequisites": [
+            "none_stated"
+          ],
+          "unknownConditions": [
+            "exact_duties",
+            "exact_time",
+            "duration",
+            "training",
+            "supervision"
+          ]
+        },
+        "complexity": {
+          "physicalLoad": "unknown",
+          "emotionalLoad": "unknown",
+          "skillRequirement": "unknown",
+          "socialLoad": "unknown",
+          "responsibility": "unknown",
+          "entryBarrier": "unknown",
+          "timeCommitment": "unknown",
+          "overall": null,
+          "explanation": "Сложность нельзя оценить без волонтёрской задачи."
+        },
+        "firstTimeFit": {
+          "verdict": "unknown",
+          "score": null,
+          "positives": [
+            "none_stated"
+          ],
+          "concerns": [
+            "unclear_duties",
+            "unclear_conditions"
+          ],
+          "explanation": "Нет данных о том, что должен делать участник."
+        },
+        "feedSignals": {
+          "friendsAllowed": "unknown",
+          "weekendEvidence": "not_stated",
+          "shortDuration": "unknown",
+          "knownDurationMinutes": null,
+          "remoteTask": "unknown",
+          "calmTask": "unknown",
+          "firstTimeCandidate": "unknown"
+        },
+        "evidence": [
+          {
+            "target": "quality_status",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "акция направлена на популяризацию сменной обуви в школе",
+            "interpretation": "Указана цель акции, но не роль волонтёра."
+          },
+          {
+            "target": "volunteer_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Сменная обувь это залог здоровья и чистоты",
+            "interpretation": "Это информационный тезис, а не задача участника."
+          },
+          {
+            "target": "first_time_fit",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "уважать труд уборщиц в школе",
+            "interpretation": "По общему посылу нельзя определить условия первого участия."
+          }
+        ],
+        "confidence": 0.99,
+        "shortExplanation": "Скрыть: карточка рассказывает о сменной обуви, но не содержит волонтёрской задачи.",
+        "vacancyId": null
+      }
+    },
+    {
+      "eventId": "11855538",
+      "expected": {
+        "schemaVersion": "1.1.0",
+        "eventId": "11855538",
+        "quality": {
+          "status": "clarification_required",
+          "taskClarity": "partial",
+          "reasons": [
+            "vague_duties",
+            "missing_time",
+            "missing_duration",
+            "missing_join_process"
+          ],
+          "explanation": "Приведены примеры добрых дел, но неясно, какое из них доступно сейчас и как присоединиться."
+        },
+        "classification": {
+          "causeAreas": [
+            "animal_welfare",
+            "elderly_support",
+            "children_youth",
+            "environment"
+          ],
+          "beneficiaryGroups": [
+            "animals",
+            "elderly_people",
+            "children",
+            "environment"
+          ],
+          "volunteerTasks": [
+            "donation_collection"
+          ],
+          "formats": [
+            "on_site"
+          ],
+          "participationModes": [
+            "small_group"
+          ],
+          "commitment": "unknown",
+          "scheduleSpecificity": "unknown"
+        },
+        "requirements": {
+          "minimumAge": 8,
+          "ownResources": [
+            "materials"
+          ],
+          "prerequisites": [
+            "none_stated"
+          ],
+          "unknownConditions": [
+            "exact_duties",
+            "exact_location",
+            "exact_time",
+            "duration",
+            "supervision"
+          ]
+        },
+        "complexity": {
+          "physicalLoad": "unknown",
+          "emotionalLoad": "low",
+          "skillRequirement": "none",
+          "socialLoad": "unknown",
+          "responsibility": "unknown",
+          "entryBarrier": "unknown",
+          "timeCommitment": "unknown",
+          "overall": null,
+          "explanation": "Примеры выглядят простыми, но фактическая задача не выбрана."
+        },
+        "firstTimeFit": {
+          "verdict": "conditional",
+          "score": 41,
+          "positives": [
+            "simple_tasks"
+          ],
+          "concerns": [
+            "unclear_duties",
+            "unclear_conditions",
+            "age_or_consent_condition"
+          ],
+          "explanation": "Идея подходит школьникам, но нужна конкретная акция с датой, местом и сопровождением."
+        },
+        "feedSignals": {
+          "friendsAllowed": "unknown",
+          "weekendEvidence": "not_stated",
+          "shortDuration": "unknown",
+          "knownDurationMinutes": null,
+          "remoteTask": "no",
+          "calmTask": "unknown",
+          "firstTimeCandidate": "conditional"
+        },
+        "evidence": [
+          {
+            "target": "quality_status",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "с собранного пакета корма для бездомных животных, с улыбки бабушке из дома престарелых или с книги, переданной в детскую больницу, со сбора макулатуры",
+            "interpretation": "Есть несколько примеров, но нет одной конкретной активной задачи."
+          },
+          {
+            "target": "volunteer_task",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "собранного пакета корма для бездомных животных",
+            "interpretation": "Подтверждён только общий пример сбора пожертвований."
+          },
+          {
+            "target": "first_time_fit",
+            "value": null,
+            "basis": "source_quote",
+            "quote": "Наши ученики уже давно это поняли! Присоединяйся и ты!",
+            "interpretation": "Карточка обращена к школьникам, но не объясняет процедуру участия."
+          }
+        ],
+        "confidence": 0.91,
+        "shortExplanation": "Похоже на реальную школьную инициативу, но нужно уточнить конкретное дело, дату, место и сопровождение.",
+        "vacancyId": null
+      }
+    }
+  ]
+}

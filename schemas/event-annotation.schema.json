@@ -1,0 +1,509 @@
+{
+  "title": "VolunteerEventAnnotation",
+  "description": "Strict semantic annotation for one volunteer opportunity. Operational checks such as expiry, duplicates, broken links, calendar weekend calculation and distance are intentionally outside this schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "eventId",
+    "vacancyId",
+    "quality",
+    "classification",
+    "requirements",
+    "complexity",
+    "firstTimeFit",
+    "feedSignals",
+    "evidence",
+    "confidence",
+    "shortExplanation"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "enum": ["1.1.0"]
+    },
+    "eventId": {
+      "type": "string"
+    },
+    "vacancyId": {
+      "type": ["string", "null"]
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "taskClarity", "reasons", "explanation"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["suitable", "clarification_required", "hidden", "human_review"]
+        },
+        "taskClarity": {
+          "type": "string",
+          "enum": ["clear", "partial", "missing", "contradictory"]
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "clear_task",
+              "sufficient_conditions",
+              "missing_task",
+              "vague_duties",
+              "missing_time",
+              "missing_location",
+              "missing_duration",
+              "missing_requirements",
+              "missing_join_process",
+              "promotional_without_task",
+              "meaningless_text",
+              "suspected_spam",
+              "contradictory_conditions",
+              "potential_safety_risk",
+              "vulnerable_people_without_safeguards",
+              "specialized_work_without_requirements",
+              "other"
+            ]
+          }
+        },
+        "explanation": {
+          "type": "string"
+        }
+      }
+    },
+    "classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "causeAreas",
+        "beneficiaryGroups",
+        "volunteerTasks",
+        "formats",
+        "participationModes",
+        "commitment",
+        "scheduleSpecificity"
+      ],
+      "properties": {
+        "causeAreas": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "animal_welfare",
+              "social_support",
+              "elderly_support",
+              "children_youth",
+              "disability_inclusion",
+              "health_medicine",
+              "donor_movement",
+              "humanitarian_aid",
+              "military_support",
+              "mutual_aid",
+              "veterans_historical_memory",
+              "poverty_crisis_support",
+              "homelessness_support",
+              "refugee_displaced_support",
+              "emergency_response",
+              "environment",
+              "urban_improvement",
+              "education_mentoring",
+              "culture_arts",
+              "sports_wellbeing",
+              "civic_initiatives",
+              "intellectual_pro_bono",
+              "nonprofit_support",
+              "other",
+              "unclear"
+            ]
+          }
+        },
+        "beneficiaryGroups": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "animals",
+              "elderly_people",
+              "children",
+              "youth",
+              "people_with_disabilities",
+              "people_with_health_conditions",
+              "families_in_crisis",
+              "low_income_people",
+              "homeless_people",
+              "refugees_displaced_people",
+              "blood_marrow_recipients",
+              "military_personnel",
+              "veterans",
+              "emergency_survivors",
+              "local_community",
+              "cultural_audiences",
+              "sports_participants",
+              "nonprofit_organizations",
+              "environment",
+              "general_public",
+              "other",
+              "unclear"
+            ]
+          }
+        },
+        "volunteerTasks": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "animal_care",
+              "dog_walking",
+              "companionship",
+              "visiting",
+              "escort_navigation",
+              "event_setup_teardown",
+              "event_guest_support",
+              "registration_check_in",
+              "crowd_navigation",
+              "sports_marshalling",
+              "teaching",
+              "mentoring",
+              "workshop_facilitation",
+              "professional_consulting",
+              "translation_language_support",
+              "administration_data_entry",
+              "fundraising_outreach",
+              "donation_collection",
+              "sorting_packing",
+              "delivery_transport",
+              "cooking_food_prep",
+              "cleaning_improvement",
+              "repair_construction",
+              "sewing_knitting_crafts",
+              "technical_making",
+              "photography_video",
+              "design_content_smm",
+              "medical_donation",
+              "search_rescue_emergency",
+              "coordination",
+              "volunteer_coordination",
+              "volunteer_training",
+              "event_logistics_resources",
+              "medical_care_support",
+              "patient_escort",
+              "document_admin",
+              "phone_outreach",
+              "partnerships",
+              "survey_research",
+              "museum_archive_support",
+              "public_safety_monitoring",
+              "food_service",
+              "environmental_monitoring",
+              "heritage_preservation",
+              "rehabilitation_support",
+              "it_technical_support",
+              "performance_entertainment",
+              "other",
+              "unclear"
+            ]
+          }
+        },
+        "formats": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["online", "on_site", "field_trip", "hybrid", "unknown"]
+          }
+        },
+        "participationModes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["solo", "pair", "small_group", "large_group", "unknown"]
+          }
+        },
+        "commitment": {
+          "type": "string",
+          "enum": ["one_off", "multiple_visits", "regular", "flexible", "unknown"]
+        },
+        "scheduleSpecificity": {
+          "type": "string",
+          "enum": ["exact_shift", "date_window", "by_agreement", "recurring_schedule", "unknown"]
+        }
+      }
+    },
+    "requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumAge", "ownResources", "prerequisites", "unknownConditions"],
+      "properties": {
+        "minimumAge": {
+          "type": ["integer", "null"]
+        },
+        "ownResources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "own_pet",
+              "smartphone",
+              "camera",
+              "computer",
+              "car",
+              "tools",
+              "protective_equipment",
+              "materials",
+              "money_for_materials",
+              "none_stated"
+            ]
+          }
+        },
+        "prerequisites": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "language_skill",
+              "driving_license",
+              "professional_qualification",
+              "health_eligibility",
+              "verified_identity_account",
+              "citizenship",
+              "medical_book",
+              "biometric_data_consent",
+              "application",
+              "interview",
+              "training",
+              "parental_consent",
+              "source_registration",
+              "none_stated"
+            ]
+          }
+        },
+        "unknownConditions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "exact_duties",
+              "exact_location",
+              "exact_time",
+              "duration",
+              "physical_requirements",
+              "training",
+              "supervision",
+              "equipment",
+              "accessibility",
+              "group_participation",
+              "remote_process",
+              "none"
+            ]
+          }
+        }
+      }
+    },
+    "complexity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "physicalLoad",
+        "emotionalLoad",
+        "skillRequirement",
+        "socialLoad",
+        "responsibility",
+        "entryBarrier",
+        "timeCommitment",
+        "overall",
+        "explanation"
+      ],
+      "properties": {
+        "physicalLoad": {
+          "type": "string",
+          "enum": ["minimal", "light", "moderate", "heavy", "unknown"]
+        },
+        "emotionalLoad": {
+          "type": "string",
+          "enum": ["low", "moderate", "high", "unknown"]
+        },
+        "skillRequirement": {
+          "type": "string",
+          "enum": ["none", "basic_briefing", "specialized", "credentialed", "unknown"]
+        },
+        "socialLoad": {
+          "type": "string",
+          "enum": ["solitary", "low", "small_group", "public_facing", "intense", "unknown"]
+        },
+        "responsibility": {
+          "type": "string",
+          "enum": ["low_supervised", "medium_independent", "high_vulnerable_people", "safety_critical", "unknown"]
+        },
+        "entryBarrier": {
+          "type": "string",
+          "enum": ["walk_in", "registration", "briefing", "application_training", "selection", "unknown"]
+        },
+        "timeCommitment": {
+          "type": "string",
+          "enum": ["up_to_2_hours", "half_day", "full_day", "multi_day", "regular", "unknown"]
+        },
+        "overall": {
+          "type": ["integer", "null"],
+          "enum": [1, 2, 3, 4, 5, null]
+        },
+        "explanation": {
+          "type": "string"
+        }
+      }
+    },
+    "firstTimeFit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verdict", "score", "positives", "concerns", "explanation"],
+      "properties": {
+        "verdict": {
+          "type": "string",
+          "enum": ["suitable", "conditional", "not_suitable", "unknown"]
+        },
+        "score": {
+          "type": ["integer", "null"]
+        },
+        "positives": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "clear_duties",
+              "simple_tasks",
+              "no_experience_required",
+              "briefing_provided",
+              "coordinator_support",
+              "flexible_schedule",
+              "short_shift",
+              "choice_of_tasks",
+              "group_format",
+              "remote_format",
+              "none_stated"
+            ]
+          }
+        },
+        "concerns": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "unclear_duties",
+              "unclear_conditions",
+              "specialized_skill",
+              "qualification_required",
+              "high_physical_load",
+              "high_emotional_load",
+              "high_social_load",
+              "high_responsibility",
+              "long_or_regular_commitment",
+              "application_or_selection",
+              "own_resource_required",
+              "age_or_consent_condition",
+              "safety_needs_review",
+              "none"
+            ]
+          }
+        },
+        "explanation": {
+          "type": "string"
+        }
+      }
+    },
+    "feedSignals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "friendsAllowed",
+        "weekendEvidence",
+        "shortDuration",
+        "knownDurationMinutes",
+        "remoteTask",
+        "calmTask",
+        "firstTimeCandidate"
+      ],
+      "properties": {
+        "friendsAllowed": {
+          "type": "string",
+          "enum": ["yes", "no", "unknown"]
+        },
+        "weekendEvidence": {
+          "type": "string",
+          "enum": ["specific_weekend_date", "explicit_recurring_weekends", "not_stated", "contradictory"]
+        },
+        "shortDuration": {
+          "type": "string",
+          "enum": ["yes", "no", "unknown"]
+        },
+        "knownDurationMinutes": {
+          "type": ["integer", "null"]
+        },
+        "remoteTask": {
+          "type": "string",
+          "enum": ["yes", "no", "unknown"]
+        },
+        "calmTask": {
+          "type": "string",
+          "enum": ["yes", "no", "unknown"]
+        },
+        "firstTimeCandidate": {
+          "type": "string",
+          "enum": ["yes", "conditional", "no", "unknown"]
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["target", "value", "basis", "quote", "interpretation"],
+        "properties": {
+          "target": {
+            "type": "string",
+            "enum": [
+              "quality_status",
+              "cause_area",
+              "beneficiary_group",
+              "volunteer_task",
+              "format",
+              "participation",
+              "commitment",
+              "requirement",
+              "physical_load",
+              "emotional_load",
+              "skill_requirement",
+              "social_load",
+              "responsibility",
+              "entry_barrier",
+              "time_commitment",
+              "first_time_fit",
+              "friends_allowed",
+              "weekend_evidence",
+              "short_duration",
+              "remote_task",
+              "calm_task"
+            ]
+          },
+          "value": {
+            "type": ["string", "null"]
+          },
+          "basis": {
+            "type": "string",
+            "enum": ["source_quote", "structured_source", "inference", "assumption"]
+          },
+          "quote": {
+            "type": "string"
+          },
+          "interpretation": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "confidence": {
+      "type": "number"
+    },
+    "shortExplanation": {
+      "type": "string"
+    }
+  }
+}

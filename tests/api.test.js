@@ -1,0 +1,37 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {spawn} from 'node:child_process';
+import path from 'node:path';
+import {createStore} from '../server/store.js';
+import {createPool} from '../server/database.js';
+const testDatabaseUrl=process.env.TEST_DATABASE_URL;
+test('PostgreSQL: two-user invitation, ownership, persistence, revocation and deletion',{skip:!testDatabaseUrl},async t=>{
+ const port=33000+Math.floor(Math.random()*2000);
+ let child;const start=()=>{child=spawn(process.execPath,['server/index.js'],{cwd:path.resolve(import.meta.dirname,'..'),env:{...process.env,PORT:String(port),HOST:'127.0.0.1',DATABASE_URL:testDatabaseUrl,DB_SCHEMA:'app',DEMO_MODE:'true',MAX_BOT_TOKEN:''},stdio:'pipe'});};start();
+ t.after(()=>{child?.kill();});
+ const base=`http://127.0.0.1:${port}`;const wait=async()=>{for(let n=0;n<80;n++){try{if((await fetch(base+'/api/health')).ok)return;}catch{}await new Promise(r=>setTimeout(r,100));}throw Error('Server did not start');};await wait();
+ const client=()=>{let cookie='';return async(url,method='GET',body)=>{const r=await fetch(base+'/api'+url,{method,headers:{'Content-Type':'application/json',Cookie:cookie},...(body?{body:JSON.stringify(body)}:{})});if(r.headers.get('set-cookie'))cookie=r.headers.get('set-cookie').split(';')[0];return {status:r.status,data:await r.json()};};};
+ const a=client(),b=client(),outsider=client(),teen=client();const beforeRegistration=await a('/bootstrap');await b('/bootstrap');await outsider('/bootstrap');assert.equal(beforeRegistration.data.catalog.length,0);assert.equal(beforeRegistration.data.recommendations.stage,'registration');assert.equal((await a('/plans','POST',{eventId:'11597695'})).status,403);
+ assert.equal((await a('/profile','PATCH',{registration:{name:'Анна',age:30}})).status,200);await b('/profile','PATCH',{registration:{name:'Борис',age:30}});await outsider('/profile','PATCH',{registration:{name:'Олег',age:30}});const initial=await a('/bootstrap');assert.ok(initial.data.catalog.length>=40);
+ await teen('/bootstrap');assert.equal((await teen('/profile','PATCH',{registration:{name:'Я',age:6}})).status,400);assert.equal((await teen('/profile','PATCH',{registration:{name:'Лена',age:13}})).status,200);const teenCatalog=(await teen('/bootstrap')).data.catalog;assert.ok(teenCatalog.length>0);assert.ok(teenCatalog.every(event=>event.age==null||Number.parseInt(event.age,10)<=13));const restricted=initial.data.catalog.find(event=>Number.parseInt(event.age,10)>13);assert.ok(restricted);assert.equal((await teen('/plans','POST',{eventId:restricted.id})).status,403);
+ const created=await a('/plans','POST',{eventId:'11597695'});assert.equal(created.status,201);const id=created.data.id;assert.equal((await a('/plans','POST',{eventId:'11597695'})).data.id,id);
+ assert.equal((await outsider(`/plans/${id}`,'PATCH',{meeting:'hack'})).status,404);
+ assert.equal((await a(`/plans/${id}`,'PATCH',{status:'done',reflection:'warm'})).status,400);
+ const {data:{code}}=await a(`/plans/${id}/invite`,'POST',{});const publicView=await b('/invites/'+code);assert.equal(publicView.status,200);assert.equal(publicView.data.meeting,undefined);
+ assert.equal((await b('/invites/'+code,'POST',{})).status,200);await b('/invites/'+code,'POST',{});assert.equal((await a('/bootstrap')).data.plans[0].members.length,1);
+ assert.equal((await b(`/plans/${id}`,'PATCH',{meeting:'hack'})).status,403);
+ assert.equal((await a(`/plans/${id}`,'PATCH',{meeting:'Встречаемся у входа',checks:['contact','contact','unknown']})).data.checks.length,1);
+ assert.equal((await b('/bootstrap')).data.plans[0].meeting,'Встречаемся у входа');
+ child.kill();await new Promise(r=>child.once('exit',r));start();await wait();assert.equal((await a('/bootstrap')).data.plans[0].meeting,'Встречаемся у входа');
+ await a(`/plans/${id}/invite`,'DELETE',{});assert.equal((await outsider('/invites/'+code)).status,410);
+ await b('/me','DELETE',{});assert.equal((await a('/bootstrap')).data.plans[0].members.length,0);
+ // Advance a fixture into the past to exercise completion without bypassing the public API.
+ const fixture=createStore(createPool({connectionString:testDatabaseUrl,applicationName:'dobrie_dela_test'}));const p=await fixture.plan(id);p.when=new Date(Date.now()-60000).toISOString();p.confirmed=true;p.status='ready';await fixture.savePlan(p);await fixture.close();
+ assert.equal((await a(`/plans/${id}`,'PATCH',{status:'done',reflection:'warm',hours:25})).status,400);
+ const finished=await a(`/plans/${id}`,'PATCH',{status:'done',reflection:'warm',hours:2.5});
+ assert.equal(finished.data.status,'done');assert.equal(finished.data.hours,2.5);
+ child.kill();await new Promise(r=>child.once('exit',r));start();await wait();
+ assert.equal((await a('/bootstrap')).data.plans[0].hours,2.5);
+ assert.equal((await a(`/plans/${id}`,'PATCH',{status:'done',reflection:'warm'})).status,400);
+ await a('/me','DELETE',{});assert.equal((await a('/bootstrap')).data.plans.length,0);
+});

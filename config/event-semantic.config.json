@@ -1,0 +1,15 @@
+{
+  "model": "gpt-5.6-terra",
+  "endpoint": "/v1/responses",
+  "store": false,
+  "primaryReasoningEffort": "medium",
+  "reviewReasoningEffort": "high",
+  "structuredOutput": {
+    "type": "json_schema",
+    "name": "volunteer_opportunity_semantic_annotation",
+    "strict": true,
+    "schemaFile": "schemas/event-semantic-annotation.schema.json"
+  },
+  "promptFile": "config/event-semantic.prompt.md",
+  "schemaVersion": "semantic-1.1.0"
+}

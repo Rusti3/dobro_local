@@ -1,0 +1,110 @@
+openapi: 3.0.3
+info:
+  title: Первый шаг API
+  version: 1.0.0
+  description: Same-origin API для MAX Mini App; demo mode uses an HttpOnly local session.
+servers:
+  - url: /
+security:
+  - maxInitData: []
+paths:
+  /api/health:
+    get:
+      security: []
+      responses:
+        '200': {description: Service health}
+  /api/max/webhook:
+    post:
+      security: []
+      description: MAX Webhook endpoint; authenticated with X-Max-Bot-Api-Secret.
+      responses:
+        '200': {description: Update accepted}
+        '403': {description: Invalid webhook secret}
+  /api/bootstrap:
+    get:
+      responses:
+        '200': {description: Current user, plans and curated catalog}
+  /api/profile:
+    patch:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ProfilePatch'}
+      responses:
+        '200': {description: Saved profile}
+  /api/plans:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [eventId]
+              properties:
+                eventId: {type: string}
+                mode: {type: string, enum: [friend, solo]}
+                when: {type: string, format: date-time, nullable: true}
+                meeting: {type: string, maxLength: 240}
+      responses:
+        '201': {description: Created personal plan}
+        '400': {description: Validation error}
+  /api/plans/{id}:
+    patch:
+      parameters: [{name: id, in: path, required: true, schema: {type: string, format: uuid}}]
+      requestBody:
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/PlanPatch'}
+      responses:
+        '200': {description: Updated plan}
+        '403': {description: Only owner can edit}
+  /api/plans/{id}/invite:
+    post:
+      parameters: [{name: id, in: path, required: true, schema: {type: string, format: uuid}}]
+      responses:
+        '201': {description: One-time invite code, valid seven days}
+    delete:
+      parameters: [{name: id, in: path, required: true, schema: {type: string, format: uuid}}]
+      responses:
+        '200': {description: Invite revoked}
+  /api/invites/{code}:
+    get:
+      security: []
+      parameters: [{name: code, in: path, required: true, schema: {type: string, minLength: 36}}]
+      responses:
+        '200': {description: Minimal invitation preview}
+        '410': {description: Expired or revoked invite}
+    post:
+      security: []
+      parameters: [{name: code, in: path, required: true, schema: {type: string, minLength: 36}}]
+      responses:
+        '200': {description: Joined plan}
+  /api/me:
+    delete:
+      responses:
+        '200': {description: User, plans and memberships deleted}
+components:
+  securitySchemes:
+    maxInitData:
+      type: apiKey
+      in: header
+      name: X-Max-Init-Data
+      description: MAX WebApp.initData; server validates HMAC with MAX bot token. Demo mode uses HttpOnly first_session instead.
+  schemas:
+    ProfilePatch:
+      type: object
+      properties:
+        category: {type: string, enum: [all, animals, people]}
+        barrier: {type: string, enum: [company, unknown, time]}
+        reminders: {type: boolean}
+    PlanPatch:
+      type: object
+      properties:
+        when: {type: string, format: date-time, nullable: true}
+        meeting: {type: string, maxLength: 240}
+        confirmed: {type: boolean}
+        checks: {type: array, items: {type: string, enum: [contact, route, bag]}}
+        status: {type: string, enum: [done, cancelled]}
+        reflection: {type: string, enum: [warm, okay, hard]}

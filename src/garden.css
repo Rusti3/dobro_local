@@ -1,0 +1,39 @@
+.garden-only-page {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  background: #b8c78b url('/garden-assets/garden-landscape.png') center center / cover no-repeat;
+}
+
+.garden-plant-label { display:block; white-space:nowrap; padding:10px 14px; border-radius:16px; background:#faf8ed; color:#344630; font-size:12px; box-shadow:0 4px 18px #34463018; }
+.garden-3d,
+.garden-3d-loading {
+  width: 100%;
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: transparent;
+}
+
+.garden-3d canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  touch-action: none;
+}
+
+.garden-3d-loading {
+  display: grid;
+  place-items: center;
+  color: #526449;
+  font-size: 0.85rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .garden-3d canvas {
+    touch-action: pan-y;
+  }
+}
